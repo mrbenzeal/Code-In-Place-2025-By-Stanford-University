@@ -6,10 +6,13 @@ using a while loop to place a row of beepers
 from karel.stanfordkarel import *
 
 def main():
+    """
+    this main function fills entire bottom row of any sized world with beepers.
+    """
     while front_is_clear():
         put_beeper()
         move()
-    # needed because of the fence-post bug
+    # this is a fence-post bug correction
     put_beeper()
 
 
