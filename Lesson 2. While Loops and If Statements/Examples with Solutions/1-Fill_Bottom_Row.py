@@ -12,7 +12,7 @@ def main():
     while front_is_clear():
         put_beeper()
         move()
-    # this is a fence-post bug correction
+    # this is a "fence-post" or an "off by one error" bug correction
     put_beeper()
 
 
