@@ -19,12 +19,17 @@ how to write more complex programs.
 It allows beginners to become familiar with basic syntax and the process of executing code.
 """
 
+"""
+This main function definition serves as the entry point of the program 
+and is responsible for executing the primary functionality 
+of printing 'Hello, World!' to the console.
+"""
 def main():
-    # This prints to the console
+    # This prints to the console the string: Hello, World!
     print("Hello, World!")
 
 
 # Run the main function when this file is executed. No need to edit these lines!
 if __name__ == '__main__':
     main()
-  
+    
