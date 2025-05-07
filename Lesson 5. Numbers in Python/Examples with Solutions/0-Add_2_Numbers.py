@@ -1,5 +1,5 @@
 """
-Program: add_2_numbers.py
+Program: Add_2_Numbers.py
 --------------------------
 This is a python program to get some practice with
 variables.  This program asks the user for two
