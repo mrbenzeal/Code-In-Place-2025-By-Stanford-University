@@ -4,7 +4,7 @@ from karel.stanfordkarel import *
 
 """
 # Section 1: Karel the Robot
-# Hospital Karel.
+# Program: Hospital_Karel.py
 This code instructs karel to walk along the row, 
 picks up supplies from the places marked by each beeper
 and build a new hospital in the places marked by each beeper. 
