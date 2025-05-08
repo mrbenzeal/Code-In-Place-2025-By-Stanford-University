@@ -4,6 +4,9 @@ from karel.stanfordkarel import *
 
 
 """
+# Section 2: Karel Problem Solving
+# Program: Spread_Beepers.py
+-----------------------------------
 Each row starts with a stack of beepers. Karel should pick them
 up, one at a time, and spread them down the row. 
 Caution! Karel can't count, and starts with infinite beepers in
