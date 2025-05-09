@@ -15,8 +15,11 @@ and is responsible for executing the primary functionality
 of printing to the console.
 """
 def main():
-    # TODO: your code here
-    pass
+    name = input("Enter your name: ")
+    topic = input("Enter a topic: ")
+    print("Creating your haiku...")
+    response = call_gpt(f"Create a haiku based on {name} and {topic}")
+    print(response)
 
 
 """
