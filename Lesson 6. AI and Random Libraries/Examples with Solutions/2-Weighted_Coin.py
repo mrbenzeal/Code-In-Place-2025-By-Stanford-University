@@ -15,7 +15,11 @@ and is responsible for executing the primary functionality
 of printing to the console.
 """
 def main():
-    print("Delete this line and write your code here! :)")
+    flip = random.randint(0,1)
+    if flip < HEAD_PROBABILITY:
+        print("Heads")
+    else:
+        print("Tails")
 
 
 """
