@@ -14,8 +14,8 @@ SORRY = "Sorry I only tell jokes"
 """
 This main function definition serves as the entry point of the program 
 and is responsible for executing the primary functionality such as managing user input, 
-doubling of the user entered number if it is less than 100 untill is 100 or greater
-and printing to the console.
+compares the user input to and will only respond to the predetermined word: "Joke",
+and printing to the console the same joke if "Joke" is entered.
 """
 def main():
     # Capture user input
