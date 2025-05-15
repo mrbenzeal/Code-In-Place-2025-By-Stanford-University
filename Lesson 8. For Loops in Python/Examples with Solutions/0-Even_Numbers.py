@@ -5,7 +5,7 @@ This is a program that prints the first 20 even numbers.
 """
 
 def main():
-    # This for-loop start at 0 and counts up to 19 (for a total of 20 numbers)
+    # # This for-loop generates the first 20 even numbers by multiplying the index by 2
     for i in range(20):
         print(i * 2)  # Use the 'i' value inside the for-loop
 
