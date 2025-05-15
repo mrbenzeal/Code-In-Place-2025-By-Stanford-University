@@ -29,7 +29,11 @@ def find_random_numbers():
         random_number = random.randint(MIN_RANDM,MAX_RANDM)
         print(random_number)
 
-# This provided line is required at the end of a Python file
-# to call the main() function.
+"""
+# This provided line is required at the end of Python file 
+  to call the main() function.
+# It allows the script to be run as the main program or imported 
+  without executing the main function immediately.
+"""
 if __name__ == '__main__':
     main()
