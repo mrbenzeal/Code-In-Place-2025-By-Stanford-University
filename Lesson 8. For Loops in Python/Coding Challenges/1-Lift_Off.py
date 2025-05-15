@@ -1,39 +1,32 @@
 """
 File: Lift_Off.py
--------------------
+------------------
 This program writes out the calls for a spaceship that is about to launch.
-It counts down the numbers from 10 to 1 and then writes “Liftoff!”
+It counts down the numbers from 10 to 1 and then outputs “Liftoff!”
 """
 
-COUNT=10
+# The main function calls the function start_countdown to start the countdown
 def main():
-    """
-    The main function calls the function countdown_start to start the countdown
-    """
+    initial_countdown_value = 10
+    start_countdown(initial_countdown_value)
 
-    countdown_start(COUNT)
-
-"""This function starts the liftoff countdown"""
-def countdown_start(number_of_counts):
-    """pre-condition -1
-       post condition-10
+# This function starts the liftoff countdown
+def start_countdown(current_count):
+    """
+    pre-condition: 1
+    post condition: 10
     """
     for i in range(10):
-
-        """condition true if value of variable is not equal to zero and false if it is equal to zero"""
-        if number_of_counts!= 0:
-            print(number_of_counts)
-            """Reducing the variable by one so the loop can print the liftoff countdown in reverse order"""
-            number_of_counts = number_of_counts-1
+        # condition true if value of variable is not equal to zero and false if it is equal to zero
+        if current_count != 0:
+            print(current_count)
+            # Reducing the variable by one so the loop can print the liftoff countdown in reverse order
+            current_count = current_count - 1
 
     print("Liftoff!")
 
 
-"""
-# This provided line is required at the end of Python file 
-  to call the main() function.
-# It allows the script to be run as the main program or imported 
-  without executing the main function immediately.
-"""
+# This provided line is required at the end of a Python file
+# to call the main() function.
 if __name__ == "__main__":
     main()
