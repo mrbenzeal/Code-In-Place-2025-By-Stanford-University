@@ -26,12 +26,14 @@ def countdown_start(number_of_counts):
             """Reducing the variable by one so the loop can print the liftoff countdown in reverse order"""
             number_of_counts = number_of_counts-1
 
-
-
-
     print("Liftoff!")
-# This provided line is required at the end of a Python file
-# to call the main() function.
+
+
+"""
+# This provided line is required at the end of Python file 
+  to call the main() function.
+# It allows the script to be run as the main program or imported 
+  without executing the main function immediately.
+"""
 if __name__ == "__main__":
     main()
-  
