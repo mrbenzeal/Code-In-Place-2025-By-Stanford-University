@@ -1,6 +1,6 @@
 """
 File: Random_Numbers.py
------------------------
+------------------------
 This program prints a series of random numbers in the
 range from MIN_RANDOM to MAX_RANDOM, inclusive
 """
@@ -29,6 +29,7 @@ def find_random_numbers():
         random_number = random.randint(MIN_RANDM,MAX_RANDM)
         print(random_number)
 
+
 """
 # This provided line is required at the end of Python file 
   to call the main() function.
@@ -37,3 +38,4 @@ def find_random_numbers():
 """
 if __name__ == '__main__':
     main()
+
