@@ -6,7 +6,9 @@ This is a program that prints the first 10 numbers in order using a for loop.
 
 
 def main():
-    print("Your code here")
+    # This for-loop generates the first 10 numbers by increasing the index by 1
+    for i in range(10):
+        print(i + 1)  # Use the 'i' value inside the for-loop
 
 
 """
@@ -17,4 +19,4 @@ def main():
 """
 if __name__ == '__main__':
     main()
-  
+    
