@@ -61,8 +61,11 @@ def nimm_game_play(num_of_stones):
         count2= count2 + 1
 
 
-# This provided line is required at the end of a Python file
-# to call the main() function.
+"""
+# This provided line is required at the end of Python file 
+  to call the main() function.
+# It allows the script to be run as the main program or imported 
+  without executing the main function immediately.
+"""
 if __name__ == '__main__':
     main()
-  
