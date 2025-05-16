@@ -15,11 +15,10 @@ and printing to the console.
 """
 def main():
     height_str = input('How tall are you? ')
-    while height_str != "":
+    if height_str != "":
         height = int(height_str)
         tall_enough(height)
-        height_str = input('How tall are you? ')
-    print('Good-bye!')
+    # print('Good-bye!')
 
 
 def tall_enough(height: int)->None:
