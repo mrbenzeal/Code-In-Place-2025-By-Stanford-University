@@ -32,7 +32,7 @@ def nimm_game_play(num_of_stones):
     pre-condition-num_of_stones is not equal to zero
     post-condition-num_of_stones is equal to zero and the loop terminates
     """
-    while(num_of_stones!=0):
+    while(num_of_stones != 0):
 
         """
         Player 1 plays
