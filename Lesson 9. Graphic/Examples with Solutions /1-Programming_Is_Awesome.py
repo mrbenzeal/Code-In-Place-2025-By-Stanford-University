@@ -23,7 +23,7 @@ def main():
 
     # Draws a red oval and a rectangle at the exact same spot!
     canvas.create_rectangle(250, 150, 500, 500)
-    canvas.create_oval     (250, 150, 500, 500, "red")
+    canvas.create_oval(250, 150, 500, 500, "red")
 
     # Images require the Pillow library, but we handle that for you
     canvas.create_image(0, 200, "simba.png")
