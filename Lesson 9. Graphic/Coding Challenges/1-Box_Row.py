@@ -24,19 +24,22 @@ def main():
     
     # Calculate the right and bottom of the square
     right_x = BOX_SIZE
-    bottom_y = top_y
+    bottom_y = top_y + BOX_SIZE
 
-
-    
-    # Delete this line and write your code here! rectangle  
-    line_of_box = my_canvas.create_rectangle(
-        left_x, 
-        top_y, 
-        right_x, 
-        bottom_y, 
-        "white", 
-        "black"
-    )
+    # Delete this line and write your code here!  (i+1)*BOX_SIZE
+    for i in range(N_BOXES):
+        # Creates a white rectangle 
+        # with a black outline
+        my_canvas.create_rectangle(
+            left_x, 
+            top_y, 
+            (i+1)*BOX_SIZE, 
+            bottom_y, 
+            "white", 
+            "black"
+        )
+        left_x += BOX_SIZE
+        # right_x = right_x * (i+1)
 
 
 """
@@ -47,4 +50,4 @@ def main():
 """
 if __name__ == '__main__':
     main()
-  
+    
