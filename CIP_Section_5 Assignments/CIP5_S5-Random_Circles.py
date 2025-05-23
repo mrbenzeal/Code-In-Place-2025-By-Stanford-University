@@ -1,7 +1,7 @@
 """
 File: Random_Circles.py
 ------------------------
-This program writes a code that draws 20 circles at random positions with random colors on the canvas
+This program writes a code that draws 20 circles at random positions with random colors on my canvas.
 """
 
 from graphics import Canvas
@@ -13,28 +13,38 @@ CIRCLE_SIZE = 20
 N_CIRCLES = 20
 
 
+"""The main function calls the function draw_random_circles to start the drawing"""
 def main():
+    # Print to the console a random colored circles
     print('Random Circles')
-    canvas = Canvas(CANVAS_WIDTH, CANVAS_HEIGHT)
-    draw_random_circles(canvas)
+
+    # Create my canvas to draw on
+    my_canvas = Canvas(CANVAS_WIDTH, CANVAS_HEIGHT)
+
+    # Draw a random colored circles on my canvas
+    draw_random_circles(my_canvas)
 
 
-def draw_random_circles(canvas):
+"""
+This function starts the drawing of 20 random colored circles, 
+and calls the function random_color to start the random coloring for each circle.
+"""
+def draw_random_circles(my_canvas):
+    # A for loop used to draw 20 random colored circles
     for i in range(N_CIRCLES):
         x = random.randint(0, CANVAS_HEIGHT-CIRCLE_SIZE)
         y = random.randint(0, CANVAS_WIDTH-CIRCLE_SIZE)
         color = random_color()
 
         print(x,y,color)
-        canvas.create_oval(x, y, x + CIRCLE_SIZE, y + CIRCLE_SIZE, random_color())
+        my_canvas.create_oval(x, y, x + CIRCLE_SIZE, y + CIRCLE_SIZE, random_color())
 
 
+"""
+This is a function to use to get a random color for each circle. 
+It was predefined for me in my program. 
+"""
 def random_color():
-    """
-    This is a function to use to get a random color for each circle. We have
-    defined this for you and there is no need to edit code in this function,
-    but feel free to read it over if you are interested. 
-    """
     colors = ['blue', 'purple', 'salmon', 'lightblue', 'cyan', 'forestgreen']
     return random.choice(colors)
 
