@@ -33,19 +33,19 @@ This function starts the drawing of 20 random colored circles,
 and calls the function random_color to start the random coloring for each circle.
 """
 def draw_random_circles(my_canvas):
-  # Ensuring that all parts of the circle are within my canvas width and height.
-  a = CANVAS_HEIGHT - 1
-  b = CANVAS_WIDTH - 1
+    # Ensuring that all parts of the circle are within my canvas width and height.
+    a = CANVAS_HEIGHT - 1
+    b = CANVAS_WIDTH - 1
 
-  while a < CANVAS_HEIGHT and b < CANVAS_WIDTH:
-    # A for loop used to draw random colored circles
-    for i in range(N_CIRCLES):
-        x = random.randint(1, a - CIRCLE_SIZE)
-        y = random.randint(1, b - CIRCLE_SIZE)
-        color = random_color()
+    if a < CANVAS_HEIGHT and b < CANVAS_WIDTH:
+        # A for loop used to draw random colored circles
+        for i in range(N_CIRCLES):
+            x = random.randint(1, a - CIRCLE_SIZE)
+            y = random.randint(1, b - CIRCLE_SIZE)
+            color = random_color()
 
-        print(x,y,color)
-        my_canvas.create_oval(x, y, x + CIRCLE_SIZE, y + CIRCLE_SIZE, random_color())
+            print(x,y,color)
+            my_canvas.create_oval(x, y, x + CIRCLE_SIZE, y + CIRCLE_SIZE, random_color())
 
 
 """
