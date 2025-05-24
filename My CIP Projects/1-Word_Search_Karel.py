@@ -1,3 +1,7 @@
+"""
+This is a Chris Piech's program that prompts Karel to search for words.
+"""
+
 from karel.stanfordkarel import *
 
 def main():
@@ -5,7 +9,6 @@ def main():
     create_puzzle()
     solve_puzzle()
     display_end_message()
-
 
 
 def create_puzzle():
@@ -24,7 +27,6 @@ def solve_puzzle():
     delay()
     delay()
     delay()
-
 
 
 def place_cardinal():
@@ -50,7 +52,6 @@ def place_cardinal():
                 moveForwardOneLetter()
                 writeCardinal()
     return_to_start()
-
 
 
 def check_for_karel():
@@ -170,7 +171,6 @@ def writeChrisInRow():
             for i in range(5):
                 moveForwardOneLetter()
 
-
     else:
         moveForwardOneLetter()
         if (beepers_present()):
@@ -188,7 +188,6 @@ def writeChrisInRow():
             else:
                 for i in range(4):
                     moveForwardOneLetter()
-
 
         else:
             for i in range(7):
@@ -209,7 +208,6 @@ def writeChrisInRow():
                 else:
                     for i in range(5):
                         moveBackOneLetter()
-
 
             else:
                 if (random(.2)):
@@ -371,104 +369,86 @@ def checkIfCardinal():
                                                                                         put_beepersBack()
                                                                                         moveToTopRow()
 
-
                                                                                 else:
                                                                                     put_beepersBack()
                                                                                     moveToTopRow()
-
 
                                                                             else:
                                                                                 put_beepersBack()
                                                                                 for i in range(6):
                                                                                     moveOneLetterUp()
 
-
                                                                         else:
                                                                             put_beepersBack()
                                                                             for i in range(6):
                                                                                 moveOneLetterUp()
-
 
                                                                     else:
                                                                         put_beepersBack()
                                                                         for i in range(5):
                                                                             moveOneLetterUp()
 
-
                                                                 else:
                                                                     put_beepersBack()
                                                                     for i in range(5):
                                                                         moveOneLetterUp()
-
 
                                                             else:
                                                                 put_beepersBack()
                                                                 for i in range(4):
                                                                     moveOneLetterUp()
 
-
                                                         else:
                                                             put_beepersBack()
                                                             for i in range(4):
                                                                 moveOneLetterUp()
-
 
                                                     else:
                                                         put_beepersBack()
                                                         for i in range(4):
                                                             moveOneLetterUp()
 
-
                                                 else:
                                                     put_beepersBack()
                                                     for i in range(3):
                                                         moveOneLetterUp()
-
 
                                             else:
                                                 put_beepersBack()
                                                 for i in range(3):
                                                     moveOneLetterUp()
 
-
                                         else:
                                             put_beepersBack()
                                             for i in range(3):
                                                 moveOneLetterUp()
-
 
                                     else:
                                         put_beepersBack()
                                         for i in range(2):
                                             moveOneLetterUp()
 
-
                                 else:
                                     put_beepersBack()
                                     for i in range(2):
                                         moveOneLetterUp()
-
 
                             else:
                                 put_beepersBack()
                                 for i in range(2):
                                     moveOneLetterUp()
 
-
                         else:
                             put_beepersBack()
                             moveOneLetterUp()
-
 
                     else:
                         put_beepersBack()
                         moveOneLetterUp()
 
-
                 else:
                     put_beepersBack()
                     moveOneLetterUp()
-
 
             else:
                 put_beepersBack()
@@ -516,15 +496,11 @@ def checkIfJava():
                                     moveBackOneLetter()
                                     moveOneLetterUp()
 
-
-
                         else:
                             put_beepersBack()
                             for i in range(2):
                                 moveBackOneLetter()
                                 moveOneLetterUp()
-
-
 
                     else:
                         put_beepersBack()
@@ -532,13 +508,10 @@ def checkIfJava():
                             moveBackOneLetter()
                             moveOneLetterUp()
 
-
-
                 else:
                     put_beepersBack()
                     moveBackOneLetter()
                     moveOneLetterUp()
-
 
             else:
                 put_beepersBack()
@@ -600,63 +573,52 @@ def checkIfChris():
                                                             for i in range(4):
                                                                 moveBackOneLetter()
 
-
                                                     else:
                                                         put_beepersBack()
                                                         for i in range(4):
                                                             moveBackOneLetter()
-
 
                                                 else:
                                                     put_beepersBack()
                                                     for i in range(3):
                                                         moveBackOneLetter()
 
-
                                             else:
                                                 put_beepersBack()
                                                 for i in range(3):
                                                     moveBackOneLetter()
-
 
                                         else:
                                             put_beepersBack()
                                             for i in range(3):
                                                 moveBackOneLetter()
 
-
                                     else:
                                         put_beepersBack()
                                         moveBackOneLetter()
                                         moveBackOneLetter()
-
 
                                 else:
                                     put_beepersBack()
                                     moveBackOneLetter()
                                     moveBackOneLetter()
 
-
                             else:
                                 put_beepersBack()
                                 moveBackOneLetter()
                                 moveBackOneLetter()
 
-
                         else:
                             put_beepersBack()
                             moveBackOneLetter()
-
 
                     else:
                         put_beepersBack()
                         moveBackOneLetter()
 
-
                 else:
                     put_beepersBack()
                     moveBackOneLetter()
-
 
             else:
                 put_beepersBack()
@@ -717,63 +679,52 @@ def checkIfKarel():
                                                             for i in range(4):
                                                                 moveBackOneLetter()
 
-
                                                     else:
                                                         put_beepersBack()
                                                         for i in range(4):
                                                             moveBackOneLetter()
-
 
                                                 else:
                                                     put_beepersBack()
                                                     for i in range(3):
                                                         moveBackOneLetter()
 
-
                                             else:
                                                 put_beepersBack()
                                                 for i in range(3):
                                                     moveBackOneLetter()
-
 
                                         else:
                                             put_beepersBack()
                                             for i in range(3):
                                                 moveBackOneLetter()
 
-
                                     else:
                                         put_beepersBack()
                                         moveBackOneLetter()
                                         moveBackOneLetter()
-
 
                                 else:
                                     put_beepersBack()
                                     moveBackOneLetter()
                                     moveBackOneLetter()
 
-
                             else:
                                 put_beepersBack()
                                 moveBackOneLetter()
                                 moveBackOneLetter()
 
-
                         else:
                             put_beepersBack()
                             moveBackOneLetter()
-
 
                     else:
                         put_beepersBack()
                         moveBackOneLetter()
 
-
                 else:
                     put_beepersBack()
                     moveBackOneLetter()
-
 
             else:
                 put_beepersBack()
@@ -869,16 +820,12 @@ def display_intro_message() :
       clearScrean()  # FAST RUN
    
 
-
 def delay():
     for i in range(4):
        turn_left()
     #    for j in range(3):
     #       for i in range(50000):
-    #          turn_left()
-         
-      
-   
+    #          turn_left()   
 
 
 def put_beepersBack():
@@ -1061,9 +1008,7 @@ def checkForSpace() :
                else :
                   moveToErrorMarker()
                   put_beeper()
-               
-            
-         
+                    
          if(no_beepers_present()) :
             turn_right()
             for i in range(4):
@@ -1071,8 +1016,6 @@ def checkForSpace() :
             moveOneLetterDown()
             turn_left()
          
-      
-   
    for i in range(4):
       if(no_beepers_present()) :
          returnFromErrorMarker()
@@ -1087,16 +1030,13 @@ def checkForSpace() :
          
          else :
             moveToErrorMarker()
-            put_beeper()
-         
-      
+            put_beeper()     
    
    if(no_beepers_present()) :
       turn_around()
       move()
       turn_left()
    
-
 
 def placeCSInColumn():
    if(random(0.1667)) :		# column 1
@@ -1137,11 +1077,6 @@ def placeCSInColumn():
                   writeCSIfFree()
                
             
-         
-      
-   
-
-
 def writeCSIfFree():
    if(no_beepers_present()) :
       for i in range(4):
@@ -1238,6 +1173,7 @@ def intro() :
    drawH()
    return_to_start()
 
+
 def display_end_message():
    clearScrean()
    for i in range(4):
@@ -1254,6 +1190,7 @@ def display_end_message():
    return_to_start()
    delay()
    clearScrean()
+
 
 def clearScrean():
    for i in range(46):
@@ -1278,7 +1215,6 @@ def clearScrean():
          move()
          turn_right()
       
-   
    for j in range(48):
       paint_corner('white')
       while(beepers_present()):
@@ -1373,7 +1309,6 @@ def circleJava():
       
       paint_corner('black')
       move()
-   
    
    turn_left()
    move()
@@ -1477,7 +1412,6 @@ def circleCardinal():
       turn_right()
    
 
-
 def move2() :
    move()
    move()
@@ -1488,7 +1422,6 @@ def move3() :
       move()
    
 
-
 def move4() :
    for i in range(4):
       move()
@@ -1498,7 +1431,6 @@ def move6() :
    for i in range(6):
       move()
    
-
 
 def drawA():
    put_beeper()
@@ -1532,6 +1464,7 @@ def drawA():
    turn_right()
    move2()
    turn_left()
+
 
 def drawC():
    for i in range(2):
@@ -1593,7 +1526,6 @@ def drawD():
       move()
    
 
-
 def drawE():
    for i in range(4):
       put_beeper()
@@ -1624,8 +1556,6 @@ def drawE():
       paint_corner('green')
    
    
-
-
 def drawH():
    for i in range(5):
       put_beeper()
@@ -1804,7 +1734,6 @@ def drawK():
    paint_corner('red')
 
 
-
 def drawN():
    for i in range(10):
       put_beeper()
@@ -1937,7 +1866,6 @@ def drawS():
    turn_left()
 
 
-
 def drawV():
    # unique beeper pile for V
    for i in range(14):
@@ -1971,6 +1899,7 @@ def drawV():
    move4()
    turn_left()
 
+
 def drawL():
    # unique beeper pile for L
    for i in range(9):
@@ -1978,6 +1907,7 @@ def drawL():
    
    drawStem()
    drawLeg()
+
 
 def drawLeg() :
    for i in range(3):
@@ -1996,13 +1926,16 @@ def drawStem() :
    paint_corner('yellow')
    turn_left()
 
+
 def turn_right():
    for i in range(3):
       turn_left()
 
+
 def turn_around():
    turn_left()
    turn_left()
+
 
 if __name__ == "__main__":
     main()
