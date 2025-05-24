@@ -1,5 +1,5 @@
 """
-File: Khansole_Academy_Optional_Extension.py
+File: Khansole_Academy_Extension.py
 ---------------------------------------------
 This program randomly generates simple addition problems for the user,
 (2-digit integers (i.e., the numbers 10 through 99))
