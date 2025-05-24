@@ -9,6 +9,14 @@ N_CIRCLES = 20
 def main():
     print('Random Circles')
     canvas = Canvas(CANVAS_WIDTH, CANVAS_HEIGHT)
+    for i in range(N_CIRCLES):
+        draw_random_circle(canvas)
+        
+def draw_random_circle(canvas):
+    x = random.randint(0, CANVAS_WIDTH)
+    y = random.randint(0, CANVAS_HEIGHT)
+    color = random_color()
+    canvas.create_oval(x, y, x + CIRCLE_SIZE, y + CIRCLE_SIZE, color)
     
 def random_color():
     """
