@@ -1,5 +1,5 @@
 """
-File: Random_Circles_Extensions.py
+File: Random_Circles_Extension.py
 -----------------------------------
 This program writes a code that 
 - Draw a random number of circles between 1 and 20
