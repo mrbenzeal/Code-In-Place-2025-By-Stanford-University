@@ -1,7 +1,7 @@
 """
 File: Chaotic_Counting.py
 --------------------------
-This program writes a code that draws .
+This program writes a code that .
 """
 
 import random
