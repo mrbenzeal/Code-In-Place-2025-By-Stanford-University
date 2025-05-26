@@ -1,7 +1,7 @@
 """
 File: Chaotic_Counting.py
 --------------------------
-This program writes a code that draws 20 circm colors on my canvas.
+This program writes a code that draws .
 """
 
 import random
