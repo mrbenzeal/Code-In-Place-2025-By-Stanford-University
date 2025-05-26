@@ -16,10 +16,8 @@ CANVAS_HEIGHT = 400
 def main():
     canvas = Canvas(CANVAS_WIDTH, CANVAS_HEIGHT)
     
-    # TODO: Replace the "#FFFFFF" (white) color parameter to make a purple circle!
+    # Replacing the "#FFFFFF" (white) color parameter to make a purple circle!
     canvas.create_oval(CANVAS_WIDTH/2 - 75, 225, CANVAS_WIDTH/2 + 75, 375, color="#800080")
-    
-    # There is no need to edit code beyond this point
     
     # Draw a red circle
     canvas.create_oval(25, 25, 175, 175, color="#990000")
