@@ -1,6 +1,6 @@
 """
 File: THIS_BIG.py
--------------------------
+------------------
 This project draws a square which has dimensions THIS_BIG by THIS_BIG 
 (each side of the square is THIS_BIG pixels long) centered at CENTER_X, CENTER_Y.
 """
@@ -15,9 +15,9 @@ CENTER_Y = 160
 
 def main():
     # Create my canvas to draw on
-    my_canvas = Canvas(CANVAS_WIDTH, CANVAS_HEIGHT)
+    canvas = Canvas(CANVAS_WIDTH, CANVAS_HEIGHT)
 
-    # Calculate the top left corner position
+    # Calculate the top left corner position 
     left_x = CENTER_X - THIS_BIG/2
     top_y = CENTER_Y - THIS_BIG/2
     
@@ -25,9 +25,9 @@ def main():
     right_x = left_x + THIS_BIG
     bottom_y = top_y + THIS_BIG
 
-	# drawing a red square and storing it in a variable 'red_square'
-    my_canvas.create_rectangle(left_x, top_y, right_x, bottom_y, 'red')
-    red_square = my_canvas.create_rectangle(left_x, top_y, right_x, bottom_y, 'red')
+	# drawing a square 
+    canvas.create_rectangle(left_x, top_y, right_x, bottom_y)
+
     
 
 """
@@ -38,3 +38,4 @@ def main():
 """
 if __name__ == '__main__':
     main()
+    
