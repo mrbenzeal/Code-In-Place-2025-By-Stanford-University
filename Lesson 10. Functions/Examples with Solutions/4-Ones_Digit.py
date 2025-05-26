@@ -14,7 +14,7 @@ def print_ones_digit(num):
 
 def main():
     num = int(input("Enter a number: "))
-    # Call your helper function with `num` as a parameter!
+    # Calling my helper function with `num` as a parameter!
     print_ones_digit(num)
     
     
