@@ -23,7 +23,7 @@ def main():
     nimm_game_play(NUMBER_OF_STONES)
 
 # This function lets two players play nimm. It calculates the counts it takes for each player to complete the game"""
-def nimm_game_play(num_of_stones):
+def nimm_game_play(NUMBER_OF_STONES):
     # count variables keep track of the number of moves it took any player to win
     count1 = 0
     count2 = 0
@@ -32,12 +32,12 @@ def nimm_game_play(num_of_stones):
     pre-condition: num_of_stones is not equal to zero
     post-condition: num_of_stones is equal to zero and the loop terminates
     """
-    while(num_of_stones != 0):
+    while(NUMBER_OF_STONES != 0):
 
         """
         Player 1 plays
         """
-        print(f"There are {num_of_stones} stones left.")
+        print(f"There are {NUMBER_OF_STONES} stones left.")
 
         # num1 asks player 1 for his input
         num1 = int(input("Player 1 would you like to remove 1 or 2 stones? "))
@@ -48,10 +48,10 @@ def nimm_game_play(num_of_stones):
         """
         while num1 != 1 and  num1 != 2:
             num1 = int(input("Please enter 1 or 2: "))
-        num_of_stones -= num1
+        NUMBER_OF_STONES -= num1
 
         # if num_of_stones is equal to zero is true then the statement runs or it comes outside
-        if num_of_stones == 0:
+        if NUMBER_OF_STONES == 0:
             print()
             print("Player 1 wins!")
             break
@@ -63,7 +63,7 @@ def nimm_game_play(num_of_stones):
         """
         Player 2 plays
         """
-        print(f"There are {num_of_stones} stones left.")
+        print(f"There are {NUMBER_OF_STONES} stones left.")
 
         # num2 asks player 2 for his input
         num2 = int(input("Player 2 would you like to remove 1 or 2 stones? "))
@@ -74,10 +74,10 @@ def nimm_game_play(num_of_stones):
         """
         while num2 != 1 and num2 != 2:
             num2 = int(input("Please enter 1 or 2: "))
-        num_of_stones -= num2
+        NUMBER_OF_STONES -= num2
 
         # if num_of_stones is equal to zero is true then the statement runs or it comes outside
-        if num_of_stones == 0:
+        if NUMBER_OF_STONES == 0:
             print()
             print("Player 2 wins!")
             break
@@ -91,3 +91,4 @@ def nimm_game_play(num_of_stones):
 # to call the main() function.
 if __name__ == '__main__':
     main()
+    
