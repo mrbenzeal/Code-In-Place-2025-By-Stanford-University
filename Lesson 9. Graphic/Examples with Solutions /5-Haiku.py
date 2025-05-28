@@ -27,27 +27,27 @@ def main():
     third_line_left_x = FIRST_LINE_LEFT_X
     third_line_top_y = FIRST_LINE_TOP_Y + 50
     
-    # 
+    # creating the first line of text
     my_canvas.create_text(FIRST_LINE_LEFT_X, FIRST_LINE_TOP_Y, 
         "An old silent pond..." ,
         font="Courier", 
         font_size=FONT_SIZE, 
         color="blue")
 
+    # creating the second line of text
     my_canvas.create_text(second_line_left_x, second_line_top_y, 
        "A frog jumps into the pond,",
         font="Courier", 
         font_size=FONT_SIZE, 
         color="blue")
 
+    # creating the third line of text
     my_canvas.create_text(third_line_left_x, third_line_top_y, 
         "splash! Silence again.",
         font="Courier", 
         font_size=FONT_SIZE, 
         color="blue")
     
-
-
 
 """
 # This provided line is required at the end of Python file 
