@@ -1,10 +1,8 @@
 """
 File: Box_Row.py
 -----------------
-This is a program that draws the flag of Indonesia using Python graphics.
-To draw the Indonesian flag all we did was to draw a single red rectangle 
-which covers the top half of the graphics canvas. 
-We don't need to draw the white stripe, because the canvas is white by default.
+This is a program that draws a line of 5 boxes perfectly in line with one another, 
+such that the boxes fill the bottom of the canvas.
 """
 
 from graphics import Canvas
