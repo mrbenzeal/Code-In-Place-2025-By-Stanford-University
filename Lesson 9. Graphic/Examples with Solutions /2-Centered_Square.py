@@ -1,7 +1,7 @@
 """
 File: Centered_Square.py
 -------------------------
-This program that draws a square, 
+This program draws a square, 
 200 pixels wide, by 200 pixels high, 
 right in the center of the canvas.
 """
