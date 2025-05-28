@@ -24,7 +24,7 @@ def main():
     right_x = BOX_SIZE
     bottom_y = top_y + BOX_SIZE
 
-    # Delete this line and write your code here!  (i+1)*BOX_SIZE
+    # Using the for loop to make a total of 5 boxes perfectly in line with one another
     for i in range(N_BOXES):
         # Creates a white rectangle 
         # with a black outline
