@@ -13,11 +13,13 @@ def main():
 
     while n != 1:
         if n % 2 == 0:
-            n = n // 2 # If even, divide by 2
-            print(f"{n} is even, so I take half: {n}")
+            next_n = n // 2 # If even, divide by 2
+            print(f"{n} is even, so I take half: {next_n}")
+            n = next_n
         elif n % 2 == 1:
-            n = (3 * n) + 1 # If odd, multiply by 3 and add 1
-            print(f"{n} is odd, so I make 3n + 1: {n}")
+            next_n = (3 * n) + 1 # If odd, multiply by 3 and add 1
+            print(f"{n} is odd, so I make 3n + 1: {next_n}")
+            n = next_n
 
 
 """
