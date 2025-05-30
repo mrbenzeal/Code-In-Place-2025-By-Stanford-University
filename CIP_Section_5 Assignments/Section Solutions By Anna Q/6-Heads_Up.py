@@ -1,7 +1,7 @@
 import random
 
 # Name of the file to read in!
-FILE_NAME = 'cswords.txt'
+FILE_NAME = '6-cswords.txt'
 
 def get_words_from_file():
     """
