@@ -1,7 +1,9 @@
 """
 File: Scene_With_Functions.py
 ------------------------------
-This program writes a code that .
+This program writes a code that: 
+- Draw three different colored clouds at different x and y locations 
+- Draw three trees with brown trunk and different colored leaves at different position.
 """
 
 from graphics import Canvas
@@ -22,16 +24,16 @@ TREE_BOTTOM_Y = CANVAS_HEIGHT - 20
 
 def main():
     canvas = Canvas(CANVAS_WIDTH, CANVAS_HEIGHT)
-    draw_cloud_1(canvas, 140, 10, 'salmon')
+    draw_cloud(canvas, 140, 10, 'salmon')
     # drawing two more clouds, and three trees
-    draw_cloud_2(canvas, 140, 10, 'salmon')
-    draw_cloud_3(canvas, 140, 10, 'salmon')
-    draw_tree_1(canvas, 140, 10, 'salmon')
-    draw_tree_2(canvas, 140, 10, 'salmon')
-    draw_tree_3(canvas, 140, 10, 'salmon')
+    draw_cloud(canvas, 260, 30, 'purple')
+    draw_cloud(canvas, 20, 50, 'violet')
+    draw_tree_1(canvas)
+    draw_tree_2(canvas)
+    draw_tree_3(canvas)
 
 
-def draw_cloud_1(canvas, x, y, color):
+def draw_cloud(canvas, x, y, color):
     """
     This function draws one cloud. You can call it and pass in 
     different values of x and y (the location of the cloud) and
@@ -101,9 +103,90 @@ def draw_cloud_1(canvas, x, y, color):
         color
     )
 
-# TODO: You should define a function like draw_cloud
-# for trees, as well as for any extra elements in the scene.
 
+def draw_tree_1(canvas):
+    """
+    Draws a tree with a brown trunk and green leaves at a fixed position.
+    """
+    trunk_x = 50
+    trunk_y_top = TREE_BOTTOM_Y - TRUNK_HEIGHT
+    trunk_y_bottom = TREE_BOTTOM_Y
+    # Draw trunk
+    canvas.create_rectangle(
+        trunk_x,
+        trunk_y_top,
+        trunk_x + TRUNK_WIDTH,
+        trunk_y_bottom,
+        'brown'
+    )
+    # Draw leaves as an oval centered above the trunk
+    leaves_center_x = trunk_x + TRUNK_WIDTH / 2
+    leaves_top = trunk_y_top - LEAVES_SIZE / 2
+    leaves_bottom = trunk_y_top + LEAVES_SIZE / 2
+    canvas.create_oval(
+        leaves_center_x - LEAVES_SIZE / 2,
+        leaves_top,
+        leaves_center_x + LEAVES_SIZE / 2,
+        leaves_bottom,
+        'green'
+    )
+
+
+def draw_tree_2(canvas):
+    """
+    Draws a tree with a brown trunk and red leaves at a fixed position.
+    """
+    trunk_x = 130
+    trunk_y_top = TREE_BOTTOM_Y - TRUNK_HEIGHT
+    trunk_y_bottom = TREE_BOTTOM_Y
+    # Draw trunk
+    canvas.create_rectangle(
+        trunk_x,
+        trunk_y_top,
+        trunk_x + TRUNK_WIDTH,
+        trunk_y_bottom,
+        'brown'
+    )
+    # Draw leaves as an oval centered above the trunk
+    leaves_center_x = trunk_x + TRUNK_WIDTH / 2
+    leaves_top = trunk_y_top - LEAVES_SIZE / 2
+    leaves_bottom = trunk_y_top + LEAVES_SIZE / 2
+    canvas.create_oval(
+        leaves_center_x - LEAVES_SIZE / 2,
+        leaves_top,
+        leaves_center_x + LEAVES_SIZE / 2,
+        leaves_bottom,
+        'red'
+    )
+    
+
+def draw_tree_3(canvas):
+    """
+    Draws a tree with a brown trunk and yellow leaves at a fixed position.
+    """
+    trunk_x = 310
+    trunk_y_top = TREE_BOTTOM_Y - TRUNK_HEIGHT
+    trunk_y_bottom = TREE_BOTTOM_Y
+    # Draw trunk
+    canvas.create_rectangle(
+        trunk_x,
+        trunk_y_top,
+        trunk_x + TRUNK_WIDTH,
+        trunk_y_bottom,
+        'brown'
+    )
+    # Draw leaves as an oval centered above the trunk
+    leaves_center_x = trunk_x + TRUNK_WIDTH / 2
+    leaves_top = trunk_y_top - LEAVES_SIZE / 2
+    leaves_bottom = trunk_y_top + LEAVES_SIZE / 2
+    canvas.create_oval(
+        leaves_center_x - LEAVES_SIZE / 2,
+        leaves_top,
+        leaves_center_x + LEAVES_SIZE / 2,
+        leaves_bottom,
+        'yellow'
+    )
+    
 
 """
 # This provided line is required at the end of Python file 
