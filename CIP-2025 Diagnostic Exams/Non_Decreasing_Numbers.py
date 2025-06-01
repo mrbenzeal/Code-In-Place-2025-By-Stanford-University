@@ -21,22 +21,22 @@ def main():
 
 
 # below is another solution
-"""
+"""   
 def main():
-    a=[]
-    i=0
+    sequence = []
+    i = 0
     print("Enter a sequence of non-decreasing numbers.")
-    g=float(input("Enter num: "))
-    a. append(g)
+    g = float(input("Enter num: "))
+    sequence.append(g)
     for i in range(100):
-        c=float(input("Enter num: "))
-        a.append(c)
-        if a[-2]>a[-1]:
-                print("Thanks for playing!")
-                print("Sequence length: "+str(i+1))
-                break
+        c = float(input("Enter num: "))
+        sequence.append(c)
+        if sequence[-2] > sequence[-1]:
+            print("Thanks for playing!")
+            print("Sequence length: "+ str(i+1))
+            break
         else: 
-            i+=1
+            i += 1
 """
 
 
