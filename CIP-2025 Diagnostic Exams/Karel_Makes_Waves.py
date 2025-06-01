@@ -1,10 +1,19 @@
 """
-File: Draw_Flag.py
--------------------
-This is a program that draws the flag of Indonesia using Python graphics.
-To draw the Indonesian flag all we did was to draw a single red rectangle 
-which covers the top half of the graphics canvas. 
-We don't need to draw the white stripe, because the canvas is white by default.
+DIAGNOSTIC_EXAM
+----------------
+File: Karel_Makes_Waves.py
+---------------------------
+Write a program that has Karel draw four small "waves". Each wave is a triangle made up of three beepers. 
+There is a gap between each wave.
+
+A few notes:
+- Karel always begins at the bottom left corner of the world, facing East
+- Karel's bag has infinite beepers.
+- It does not matter which direction Karel ends up facing.
+- You may assume that the world is always exactly 11 columns wide and 5 columns tall. 
+- Your program only needs to work for this sized world.
+- You must not use any non-Karel features like variables, return or break. 
+- You may use any Karel features described in the course reader.
 """
 
 from karel.stanfordkarel import *
