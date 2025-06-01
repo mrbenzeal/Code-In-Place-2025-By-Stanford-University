@@ -1,3 +1,29 @@
+"""
+DIAGNOSTIC_EXAM
+----------------
+File: Non_Decreasing_Numbers.py
+--------------------------------
+Write a program that asks the user to enter a sequence of "non-decreasing" numbers one at a time. 
+Numbers are non-decreasing if each number is greater than or equal to the last.
+When the user enters a number which is smaller than their previously entered value, the program is over. 
+Tell the user how long their sequence was.
+
+A few notes:
+- Include the intro message, Enter a sequence of non-decreasing numbers.
+- Include the exit message, Thanks for playing!.
+- Include the exit message, Sequence length: followed by the length of the sequence.
+- The length of the sequence does not include the very last number entered as it is "decreasing"
+- Your program should accept floating point numbers.
+- The sequence only ends when one number is strictly less than the last.
+- You do not have to handle the case where the user enters a value which is not a number (say "abc").
+- The user can start with any number, positive or negative.
+- Note that the shortest possible sequence is 1. A sequence with a single number can't be decreasing. 
+A sequence with two numbers can be decreasing.
+
+A simple way to achieve great things in life is to make small forward progress every day. 
+Non-decreasing progress is one of the principles behind modern AI.
+"""
+
 def main():
     print("Enter a sequence of non-decreasing numbers.")
     
