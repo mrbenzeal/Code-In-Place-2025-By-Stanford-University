@@ -98,4 +98,3 @@ def draw_car_2(canvas):
 
 if __name__ == '__main__':
     main()
-  
