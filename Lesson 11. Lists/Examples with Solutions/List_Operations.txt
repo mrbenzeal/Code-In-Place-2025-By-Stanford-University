@@ -2,11 +2,35 @@ if an empty list -----> list = []
 list.append(2) -----> list = [2]
 
 if list -----> list = [3,6,8,4,1]
-list.append(5) -----> list = [3,6,8,4,1,5]
+'list.append(5)' adds an element to the end of a list -----> list = [3,6,8,4,1,5]
+
+len(list) -----> returns the number of the elements in a list
+
+'list.pop(0)' removes last element of the list using the index and can return it as parameter
+
+'list.remove(4)' removes the first instance of an element in a list 
 
 to check if an element '8' is in a 'list = [3,6,8,4,1,5]'
 use 'if 8 in list:'
 
 use 'for number in numbers:' -----> when only the value is needed
 use 'for i in range(len(numbers)):' -----> when the value & indices are needed
+
+use 'if list:' as a condition evaluate to 'True' if list has element & 'False' if no element
+
+if list_1 = [3,6,8,4,1] & list_2 = [9,5,2] 
+-----> list_1.extend(list_2) -----> list_1 = [3,6,8,4,1,9,5,2] & list_2 = [9,5,2]
+-----> combined = list_1 + list_2 -----> combined = [3,6,8,4,1,9,5,2], list_1 = [3,6,8,4,1] & list_2 = [9,5,2]
+
+if a list = [3,6,8,4,6], idx = list.index(6) -----> first index of an element in its first instance in a list
+-----> idx = 1
+
+if a list = [3,6,8,], list.insert(1,7) -----> inserts an element '7' at a specific index '1' & shift others down
+-----> list = [3,7,6,8,]
+
+if a list = [3,7,-8,4,6]
+-----> max(list) -----> returns the largest element in the list -----> 7
+-----> min(list) -----> returns the smallest element in the list -----> -8
+-----> sum(list) -----> returns the sum of the elements in the list -----> 12
+
 
