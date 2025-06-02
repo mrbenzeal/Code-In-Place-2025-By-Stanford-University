@@ -23,5 +23,6 @@ def main():
         else:
             print(f"{number} is odd")
 
+
 if __name__ == "__main__":
     main()
