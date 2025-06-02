@@ -46,7 +46,7 @@ def main():
     print(f"Sequence length: {len(sequence)}")
 
 
-# below is another solution
+# below are other solutions
 """   
 def main():
     sequence = []
@@ -65,6 +65,25 @@ def main():
             i += 1
 """
 
+"""
+def main():
+    print("Enter a sequence of non-decreasing numbers.")   
+
+    sequence = []
+
+    a = float(input("Enter num: "))
+    sequence.append(a)
+
+    for i in range(100):
+        b = float(input("Enter num: "))
+        if a > b:
+            print("Thanks for playing!")
+            print("Sequence length:", len(sequence))
+            break
+        else:
+            a = b
+            sequence.append(a)
+"""
 
 
 if __name__ == "__main__":
