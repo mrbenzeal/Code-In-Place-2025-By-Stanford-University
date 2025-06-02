@@ -7,3 +7,6 @@ list.append(5) -----> list = [3,6,8,4,1,5]
 to check if an element '8' is in a 'list = [3,6,8,4,1,5]'
 use 'if 8 in list:'
 
+use 'for number in numbers:' -----> when only the value is needed
+use 'for i in range(len(numbers)):' -----> when the value & indices are needed
+
