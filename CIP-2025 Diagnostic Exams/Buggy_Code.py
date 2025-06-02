@@ -60,6 +60,42 @@ def draw_car(canvas, x, y):
     canvas.create_rectangle(x, y, x + 50, y + 20)
     canvas.create_rectangle(x + 10, y - 10, x + 40, y + 20)
 
+"""
+def main():
+    # The width and height of the canvas to draw on
+    canvas = Canvas(400, 400)
+
+    # drawing two cars
+    draw_car_1(canvas)
+    draw_car_2(canvas)
+
+def draw_car_1(canvas):
+    # drawing the first car at the location x, y
+    # Assuming the math offsets for the rectangles to be correct
+    # Where the width and length of the first and second rectangle are: 
+    # 20x50 and 20x40 respectively. 
+    
+    x = 10
+    y = 10
+
+    canvas.create_rectangle(x, y, x + 50, y + 20)
+    canvas.create_rectangle(x + 10, y - 10, x + 40, y + 20)
+
+
+def draw_car_2(canvas):
+    # drawing the second car at the location x, y
+    # Assuming the math offsets for the rectangles to be correct
+    # Where the width and length of the first and second rectangle are: 
+    # 20x50 and 20x40 respectively.
+    
+    x = 100
+    y = 100
+
+    canvas.create_rectangle(x, y, x + 50, y + 20)
+    canvas.create_rectangle(x + 10, y - 10, x + 40, y + 20)
+"""
+
+
 if __name__ == '__main__':
     main()
   
