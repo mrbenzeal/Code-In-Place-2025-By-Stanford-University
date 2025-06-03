@@ -5,14 +5,6 @@ This program shows an example of using dictionaries
 to keep track of information in a phonebook.
 """
 
-"""
-This is a worked example. This code is starter code; you should edit and run it to 
-solve the problem. You can click the blue show solution button on the left to see 
-the answer if you get too stuck or want to check your work!
-
-Note: The starter code for this example is the solution.
-"""
-
 def read_phone_numbers():
     """
     Ask the user for names/numbers to story in a phonebook (dictionary).
