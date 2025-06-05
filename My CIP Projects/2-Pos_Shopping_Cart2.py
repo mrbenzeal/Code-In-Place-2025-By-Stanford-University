@@ -1,3 +1,20 @@
+"""
+File: Pos_Shopping_Cart.py
+---------------------------
+This Point-of-Sale (POS) Shopping Cart System is a solo-friendly, 
+interactive Python project using graphics.Canvas and random. 
+It simulates a real-world retail checkout experience with product selection 
+via buttons or barcode input, a dynamic cart display, stock management, 
+discount codes, tax, and payment method selection (cash, card, or transfer). 
+Users can clear carts, see visual updates, and receive real-time total cost calculations 
+with animation for bulk discounts. 
+Receipts are exported with customer names, timestamps, and loyalty points. 
+Admin functions include restocking and viewing daily sales reports.
+ 
+The code is modular, well-commented, and designed for educational use 
+at an intermediate Python level.
+"""
+
 from graphics import Canvas
 import random
 import os
