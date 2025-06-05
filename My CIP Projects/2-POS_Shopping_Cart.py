@@ -1,5 +1,7 @@
 """
-File: Pos_Shopping_Cart.py
+CIP_Section_5 PROJECT
+----------------------
+File: POS_Shopping_Cart.py
 ---------------------------
 This Point-of-Sale (POS) Shopping Cart System is a solo-friendly, 
 interactive Python project using graphics.Canvas and random. 
