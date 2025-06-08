@@ -24,7 +24,7 @@ CANVAS_WIDTH = 600
 CANVAS_HEIGHT = 400
 
 # --- Constant Definitions ---
-# DISCOUNT_CODES = {"SAVE10": 10, "SAVE20": 20}
+# --ToDo-- DISCOUNT_CODES = {"SAVE10": 10, "SAVE20": 20}
 DISCOUNT_CHANCE = 0.2
 BULK_DISCOUNT_THRESHOLD = 300
 BULK_DISCOUNT = 50
@@ -196,7 +196,7 @@ def checkout(cart, customer_name, total_price, user_discount, payment_received, 
 # --- GUI Drawing Functions ---
 def draw_buttons(canvas, products, cart, total_price, user_discount, payment_method):
     canvas.clear()
-    #canvas.set_outline_color(color="lightgray")
+    # --error-- canvas.set_outline_color(color="lightgray")
     canvas.create_text(80, 10, "Click a product or scan barcode to add to cart", color="red", font="Courier", font_size=15)
 
     product_buttons = []
@@ -204,14 +204,14 @@ def draw_buttons(canvas, products, cart, total_price, user_discount, payment_met
         x = START_X
         y = START_Y + i * GAP_Y
         rect = canvas.create_rectangle(x, y, x + BUTTON_WIDTH, y + BUTTON_HEIGHT)
-        #canvas.set_fill_color("white")
+        # --error-- canvas.set_fill_color("white")
         canvas.create_rectangle(x, y, BUTTON_WIDTH, BUTTON_HEIGHT)
-        #canvas.set_fill_color("black")
+        # --error-- canvas.set_fill_color("black")
         stock = info["stock"]
         canvas.create_text(x + 5, y + 25, f"{info['image']} {item} - ₦{info['price']} ({stock})", color="brown", font="Courier", font_size=14)
         product_buttons.append((rect, item))
 
-    #canvas.set_fill_color("blue")
+    # --error-- canvas.set_fill_color("blue")
     canvas.create_text(400, 130, f"Total: ₦{total_price:,.2f}", color="blue", font="Courier", font_size=18)
 
     draw_cart_panel(canvas, cart)
@@ -220,7 +220,7 @@ def draw_buttons(canvas, products, cart, total_price, user_discount, payment_met
 
 
 def draw_cart_panel(canvas, cart):
-    #canvas.set_fill_color("black")
+    # --error-- canvas.set_fill_color("black")
     canvas.create_text(400, CART_PANEL_START_Y - 20, "Cart:", color="blue", font="Courier", font_size=16)
     y = CART_PANEL_START_Y
     cart_summary = {}
@@ -237,25 +237,25 @@ def draw_cart_panel(canvas, cart):
 
 
 def draw_payment_selector(canvas, payment_method):
-    #canvas.set_fill_color("black")
+    # --error-- canvas.set_fill_color("black")
     canvas.create_text(50, 280, "Payment Method:", color="violet", font="Courier", font_size=14)
     for i, method in enumerate(PAYMENT_OPTIONS):
         x = 50 + i * 110
         y = 300
         canvas.create_rectangle(x, y, x + 100, y + 30)
-        #canvas.set_fill_color("white")
+        # --error-- canvas.set_fill_color("white")
         canvas.create_rectangle(x, y, 100, 30)
-        #canvas.set_fill_color("black")
+        # --error-- canvas.set_fill_color("black")
         canvas.create_text(x + 10, y + 20, method, color="violet", font="Courier", font_size=12)
         if method == payment_method:
-            #canvas.set_fill_color("blue")
+            # --error-- canvas.set_fill_color("blue")
             canvas.create_text(x + 80, y + 20, "✓", color="yellow", font="Courier", font_size=14)
 
 
 def moving_objects(canvas):
     # creating brown_ball and my_image; and storing them in variables
     brown_ball = canvas.create_oval(0, 370, BALL_SIZE, BALL_SIZE + 370, 'brown')
-    # my_image = canvas.create_image(x, y, 'image')
+    # --ToDo-- my_image = canvas.create_image(x, y, 'image')
     
     # change on the x and y cordinates for the ball
     change_x = 2
