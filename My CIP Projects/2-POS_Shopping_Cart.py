@@ -12,9 +12,6 @@ Users can clear carts, see visual updates, and receive real-time total cost calc
 with animation for bulk discounts. 
 Receipts are exported with customer names, timestamps, and loyalty points. 
 Admin functions include restocking and viewing daily sales reports.
- 
-The code is modular, well-commented, and designed for educational use 
-at an intermediate Python level.
 """
 
 from graphics import Canvas
@@ -22,142 +19,154 @@ import random
 import os
 import time
 
-# Initialize canvas
-canvas = Canvas()
-canvas.set_canvas_title("Enhanced POS System")
-canvas.set_canvas_size(700, 550)
+# --- Canvas Constants --- 
+CANVAS_WIDTH = 600
+CANVAS_HEIGHT = 400
 
-# --- Data Definitions ---
-
-# Products available in the POS
-products = {
-    "Apple": {"price": 100, "image": "🍎", "stock": 5, "barcode": "111"},
-    "Banana": {"price": 50, "image": "🍌", "stock": 5, "barcode": "222"},
-    "Orange": {"price": 80, "image": "🍊", "stock": 5, "barcode": "333"}
-}
-
-# Store UI button and session states
-product_buttons = []
-cart = []
-total_price = 0
-TAX_RATE = 0.05
-DISCOUNT_CODES = {"SAVE10": 10, "SAVE20": 20}
-user_discount = 0
-cart_panel_start_y = 200
+# --- Constant Definitions ---
+# DISCOUNT_CODES = {"SAVE10": 10, "SAVE20": 20}
 DISCOUNT_CHANCE = 0.2
-bulk_discount_threshold = 300
-bulk_discount = 50
-
-# Button layout constants
+BULK_DISCOUNT_THRESHOLD = 300
+BULK_DISCOUNT = 50
+TAX_RATE = 0.05
+PAYMENT_OPTIONS = ["Cash", "Card", "Transfer"]
 BUTTON_WIDTH = 100
 BUTTON_HEIGHT = 40
 START_X = 50
 START_Y = 50
+CART_PANEL_START_Y = 200
 GAP_Y = 60
-
-# GUI component references
-clear_cart_button = None
-checkout_button = None
-payment_method = "Cash"
-payment_options = ["Cash", "Card", "Transfer"]
-selected_payment_button = None
-cart_animation_step = 0
-customer_name = "Customer"
-payment_received = 0
-admin_mode = False
-
-# Loyalty and reports
-loyalty_points = {}
-daily_sales = []
-
-# --- GUI Drawing Functions ---
-
-def draw_buttons():
-    """Redraws all interactive buttons and panels"""
-    global clear_cart_button, checkout_button, selected_payment_button
-    canvas.clear()
-    canvas.set_fill_color("lightgray")
-    canvas.draw_text("Click a product or scan barcode to add to cart", 80, 20, "15px Arial")
-
-    product_buttons.clear()
-    for i, (item, info) in enumerate(products.items()):
-        x = START_X
-        y = START_Y + i * GAP_Y
-        rect = canvas.create_rectangle(x, y, x + BUTTON_WIDTH, y + BUTTON_HEIGHT)
-        canvas.set_fill_color("white")
-        canvas.fill_rect(x, y, BUTTON_WIDTH, BUTTON_HEIGHT)
-        canvas.set_fill_color("black")
-        stock = info["stock"]
-        canvas.draw_text(f"{info['image']} {item} - ₦{info['price']} ({stock})", x + 5, y + 25, "14px Arial")
-        product_buttons.append((rect, item))
-
-    # Draw Clear Cart button
-    clear_cart_button = canvas.create_rectangle(250, 50, 350, 90)
-    canvas.set_fill_color("red")
-    canvas.fill_rect(250, 50, 100, 40)
-    canvas.set_fill_color("white")
-    canvas.draw_text("Clear Cart", 260, 75, "14px Arial")
-
-    # Draw Checkout button
-    checkout_button = canvas.create_rectangle(250, 100, 350, 140)
-    canvas.set_fill_color("green")
-    canvas.fill_rect(250, 100, 100, 40)
-    canvas.set_fill_color("white")
-    canvas.draw_text("Checkout", 265, 125, "14px Arial")
-
-    # Show total price
-    canvas.set_fill_color("blue")
-    canvas.draw_text(f"Total: ₦{total_price:,.2f}", 400, 130, "18px Arial")
-
-    draw_cart_panel()
-    draw_payment_selector()
+BALL_SIZE = 20
+DELAY = 0.01    # seconds to wait between each update
+MIN_STOCK = 5
+MAX_STOCK = 20
 
 
-def draw_cart_panel():
-    """Displays the list of items and totals in the cart"""
-    canvas.set_fill_color("black")
-    canvas.draw_text("Cart:", 400, cart_panel_start_y - 20, "16px Arial")
-    y = cart_panel_start_y
-    cart_summary = {}
-    for item, price in cart:
-        if item in cart_summary:
-            cart_summary[item]["qty"] += 1
-            cart_summary[item]["total"] += price
-        else:
-            cart_summary[item] = {"qty": 1, "total": price}
+# --- Main Entry ---
+def main():
+    # Initialize canvas
+    canvas = Canvas(CANVAS_WIDTH, CANVAS_HEIGHT)
 
-    for item, data in cart_summary.items():
-        canvas.draw_text(f"{item} x{data['qty']} - ₦{data['total']:,.2f}", 400, y, "14px Arial")
-        y += 20
+    print("  POS Shopping Cart System")
+    print("<-------------------------->")
+
+    # creating the canvas title line of text
+    canvas_title = canvas.create_text(220, 5, "POS Shopping Cart System", color="blue", font="Courier", font_size=10)
+
+    products = get_initial_products()
+    cart = []
+    loyalty_points = {}
+    daily_sales = []
+    payment_method = "Cash"
+    customer_name = input("Enter customer name: ")
+    total_price = 0
+    user_discount = 0
+
+    state = (cart, products, loyalty_points, daily_sales, payment_method, customer_name, total_price, user_discount)
+    draw_buttons(canvas, products, cart, total_price, user_discount, payment_method)
+
+    def handler(x, y):
+        nonlocal state
+        cart, products, loyalty_points, daily_sales, payment_method, customer_name, total_price, user_discount = state
+        cart, total_price, user_discount = on_mouse_click(canvas, x, y, state)
+        state = (cart, products, loyalty_points, daily_sales, payment_method, customer_name, total_price, user_discount)
+
+    canvas.wait_for_click()
+
+    while True:
+        command = input("Command (barcode/restock/checkout/exit): ").strip().lower()
+        if command == "barcode":
+            code = input("Enter barcode: ")
+            cart, total_price = simulate_barcode_scan(code, products, cart, total_price)
+            draw_buttons(canvas, products, cart, total_price, user_discount, payment_method)
+        elif command == "restock":
+            restock(products)
+            draw_buttons(canvas, products, cart, total_price, user_discount, payment_method)
+        elif command == "checkout":
+            try:
+                payment_received = float(input("Enter amount paid: ₦"))
+            except ValueError:
+                print("❌ Invalid amount")
+                continue
+            cart = checkout(cart, customer_name, total_price, user_discount, payment_received, payment_method, loyalty_points, daily_sales)
+            total_price = 0
+            user_discount = 0
+            draw_buttons(canvas, products, cart, total_price, user_discount, payment_method)
+        elif command == "exit":
+            print("👋 Exiting POS...")
+            moving_objects(canvas)
+            break
 
 
-def draw_payment_selector():
-    """Draws buttons for selecting payment method"""
-    global selected_payment_button
-    canvas.set_fill_color("black")
-    canvas.draw_text("Payment Method:", 50, 280, "14px Arial")
-    selected_payment_button = []
-    for i, method in enumerate(payment_options):
-        x = 50 + i * 110
-        y = 300
-        button = canvas.create_rectangle(x, y, x + 100, y + 30)
-        canvas.set_fill_color("white")
-        canvas.fill_rect(x, y, 100, 30)
-        canvas.set_fill_color("black")
-        canvas.draw_text(method, x + 10, y + 20, "12px Arial")
-        if method == payment_method:
-            canvas.set_fill_color("blue")
-            canvas.draw_text("✓", x + 80, y + 20, "14px Arial")
-        selected_payment_button.append((button, method))
+# --- Data Definitions ---
+def get_initial_products():
+
+    # Generate random stock numbers
+    num1 = random.randint(MIN_STOCK, MAX_STOCK)
+    num2 = random.randint(MIN_STOCK, MAX_STOCK)
+    num3 = random.randint(MIN_STOCK, MAX_STOCK)
+
+    return {
+        "Apple": {"price": 100, "image": "🍎", "stock": num1, "barcode": "111"},
+        "Banana": {"price": 50, "image": "🍌", "stock": num2, "barcode": "222"},
+        "Orange": {"price": 80, "image": "🍊", "stock": num3, "barcode": "333"}
+    }
 
 
-# --- Functional Logic (cart, receipt, loyalty) ---
+# --- Event Handling ---
+def on_mouse_click(canvas, x, y, state):
+    cart, products, loyalty_points, daily_sales, payment_method, customer_name, total_price, user_discount = state
 
-def export_receipt():
-    """Generates and saves a receipt text file with unique name"""
+    for rect, item in draw_buttons(canvas, products, cart, total_price, user_discount, payment_method):
+        if canvas.get_object_at(x, y) == rect:
+            if products[item]["stock"] > 0:
+                products[item]["stock"] -= 1
+                cart.append((item, products[item]["price"]))
+                total_price += products[item]["price"]
+                if total_price > BULK_DISCOUNT_THRESHOLD and random.random() < DISCOUNT_CHANCE:
+                    user_discount += BULK_DISCOUNT
+                    print(f"🎉 Bulk discount applied: ₦{BULK_DISCOUNT}")
+            else:
+                print(f"⚠️ {item} is out of stock!")
+            break
+
+    draw_buttons(canvas, products, cart, total_price, user_discount, payment_method)
+    return cart, total_price, user_discount
+
+
+# --- Command Handlers ---
+def simulate_barcode_scan(barcode, products, cart, total_price):
+    for name, info in products.items():
+        if info["barcode"] == barcode:
+            if info["stock"] > 0:
+                info["stock"] -= 1
+                cart.append((name, info["price"]))
+                total_price += info["price"]
+                print(f"🔍 Scanned {name}, added to cart.")
+            else:
+                print(f"⚠️ {name} is out of stock!")
+            break
+    else:
+        print("❌ Unknown barcode")
+    return cart, total_price
+
+
+def restock(products):
+    for item in products:
+        products[item]["stock"] += 5
+    print("✅ Products restocked.")
+
+
+def calculate_final_total(total_price, user_discount):
+    tax = total_price * TAX_RATE
+    final_total = total_price + tax - user_discount
+    return final_total, tax
+
+
+def checkout(cart, customer_name, total_price, user_discount, payment_received, payment_method, loyalty_points, daily_sales):
     timestamp = time.strftime("%Y-%m-%d_%H-%M-%S")
     filename = f"receipt_{customer_name}_{timestamp}.txt"
-    final_total, tax = calculate_final_total()
+    final_total, tax = calculate_final_total(total_price, user_discount)
     with open(filename, "w") as f:
         f.write(f"Customer: {customer_name}\n")
         f.write(f"Time: {time.strftime('%Y-%m-%d %H:%M:%S')}\n")
@@ -175,67 +184,107 @@ def export_receipt():
         f.write(f"Loyalty Points Earned: {int(final_total / 100)}\n")
 
     print(f"🧾 Receipt exported: {filename}")
-    record_sale(final_total)
-    award_loyalty_points(customer_name, final_total)
+    points = int(final_total / 100)
+    if customer_name not in loyalty_points:
+        loyalty_points[customer_name] = 0
+    loyalty_points[customer_name] += points
+    print(f"🌟 {customer_name} earned {points} points. Total: {loyalty_points[customer_name]}")
+    daily_sales.append((timestamp, customer_name, final_total))
+    return []
 
 
-def calculate_final_total():
-    """Computes final total including tax and discount"""
-    tax = total_price * TAX_RATE
-    final_total = total_price + tax - user_discount
-    return final_total, tax
+# --- GUI Drawing Functions ---
+def draw_buttons(canvas, products, cart, total_price, user_discount, payment_method):
+    canvas.clear()
+    #canvas.set_outline_color(color="lightgray")
+    canvas.create_text(80, 10, "Click a product or scan barcode to add to cart", color="red", font="Courier", font_size=15)
+
+    product_buttons = []
+    for i, (item, info) in enumerate(products.items()):
+        x = START_X
+        y = START_Y + i * GAP_Y
+        rect = canvas.create_rectangle(x, y, x + BUTTON_WIDTH, y + BUTTON_HEIGHT)
+        #canvas.set_fill_color("white")
+        canvas.create_rectangle(x, y, BUTTON_WIDTH, BUTTON_HEIGHT)
+        #canvas.set_fill_color("black")
+        stock = info["stock"]
+        canvas.create_text(x + 5, y + 25, f"{info['image']} {item} - ₦{info['price']} ({stock})", color="brown", font="Courier", font_size=14)
+        product_buttons.append((rect, item))
+
+    #canvas.set_fill_color("blue")
+    canvas.create_text(400, 130, f"Total: ₦{total_price:,.2f}", color="blue", font="Courier", font_size=18)
+
+    draw_cart_panel(canvas, cart)
+    draw_payment_selector(canvas, payment_method)
+    return product_buttons
 
 
-def award_loyalty_points(name, amount):
-    """Updates customer profile with earned loyalty points"""
-    points = int(amount / 100)
-    if name not in loyalty_points:
-        loyalty_points[name] = 0
-    loyalty_points[name] += points
-    print(f"🌟 {name} earned {points} points. Total: {loyalty_points[name]}")
+def draw_cart_panel(canvas, cart):
+    #canvas.set_fill_color("black")
+    canvas.create_text(400, CART_PANEL_START_Y - 20, "Cart:", color="blue", font="Courier", font_size=16)
+    y = CART_PANEL_START_Y
+    cart_summary = {}
+    for item, price in cart:
+        if item in cart_summary:
+            cart_summary[item]["qty"] += 1
+            cart_summary[item]["total"] += price
+        else:
+            cart_summary[item] = {"qty": 1, "total": price}
+
+    for item, data in cart_summary.items():
+        canvas.create_text(400, y, f"{item} x{data['qty']} - ₦{data['total']:,.2f}", color="blue", font="Courier", font_size=14)
+        y += 20
 
 
-def record_sale(amount):
-    """Appends transaction to daily sales log"""
-    timestamp = time.strftime("%Y-%m-%d %H:%M:%S")
-    daily_sales.append((timestamp, customer_name, amount))
+def draw_payment_selector(canvas, payment_method):
+    #canvas.set_fill_color("black")
+    canvas.create_text(50, 280, "Payment Method:", color="violet", font="Courier", font_size=14)
+    for i, method in enumerate(PAYMENT_OPTIONS):
+        x = 50 + i * 110
+        y = 300
+        canvas.create_rectangle(x, y, x + 100, y + 30)
+        #canvas.set_fill_color("white")
+        canvas.create_rectangle(x, y, 100, 30)
+        #canvas.set_fill_color("black")
+        canvas.create_text(x + 10, y + 20, method, color="violet", font="Courier", font_size=12)
+        if method == payment_method:
+            #canvas.set_fill_color("blue")
+            canvas.create_text(x + 80, y + 20, "✓", color="yellow", font="Courier", font_size=14)
 
 
-def show_daily_report():
-    """Displays the daily sales summary in terminal"""
-    print("\n📈 Daily Sales Report")
-    print("----------------------------")
-    total_day = 0
-    for time_str, customer, amount in daily_sales:
-        print(f"{time_str} - {customer}: ₦{amount:,.2f}")
-        total_day += amount
-    print("----------------------------")
-    print(f"Total Sales: ₦{total_day:,.2f}\n")
+def moving_objects(canvas):
+    # creating brown_ball and my_image; and storing them in variables
+    brown_ball = canvas.create_oval(0, 370, BALL_SIZE, BALL_SIZE + 370, 'brown')
+    # my_image = canvas.create_image(x, y, 'image')
+    
+    # change on the x and y cordinates for the ball
+    change_x = 2
+    change_y = 1
+
+    # animation loop for the brown ball
+    while(True):
+        left_x = canvas.get_left_x(brown_ball)
+        top_y = canvas.get_top_y(brown_ball)
+
+        # change direction if ball reaches an edge
+        if left_x < 0 or left_x + BALL_SIZE >= CANVAS_WIDTH:
+            change_x = -change_x
+        
+        if top_y < 370 or top_y + BALL_SIZE >= CANVAS_HEIGHT:
+            change_y = -change_y
+
+        # update the ball
+        canvas.move(brown_ball, change_x, change_y)
+        
+        # pause
+        time.sleep(DELAY)
 
 
-# --- Event & Interaction Logic ---
-# (on_mouse_click, input loop, etc.)
-# ... (Keep all existing interaction code unchanged for brevity)
-
-# --- Main Entry ---
-def main():
-    global customer_name
-    customer_name = input("Enter customer name: ") or "Customer"
-    draw_buttons()
-    canvas.set_mouse_click_handler(on_mouse_click)
-
-    while True:
-        command = input("Command (barcode/restock/report/exit): ").strip().lower()
-        if command == "barcode":
-            simulate_barcode_scan()
-        elif command == "restock":
-            restock()
-        elif command == "report":
-            show_daily_report()
-        elif command == "exit":
-            print("👋 Exiting POS...")
-            break
-
-
+"""
+# This provided line is required at the end of Python file 
+  to call the main() function.
+# It allows the script to be run as the main program or imported 
+  without executing the main function immediately.
+"""
 if __name__ == "__main__":
     main()
