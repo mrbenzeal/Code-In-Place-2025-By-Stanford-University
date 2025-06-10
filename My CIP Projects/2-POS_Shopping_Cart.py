@@ -32,12 +32,12 @@ TAX_RATE = 0.05
 PAYMENT_OPTIONS = ["Cash", "Card", "Transfer"]
 MIN_STOCK = 5
 MAX_STOCK = 20
-BUTTON_WIDTH = 100
-BUTTON_HEIGHT = 40
+BUTTON_WIDTH = 200
+BUTTON_HEIGHT = 20
 START_X = 50
-START_Y = 50
-CART_PANEL_START_Y = 200
-GAP_Y = 60
+START_Y = 45
+CART_PANEL_START_Y = 140
+GAP_Y = 30
 BALL_SIZE = 20
 DELAY = 0.01    # seconds to wait between each update
 
@@ -112,14 +112,14 @@ def get_initial_products():
     num8 = random.randint(MIN_STOCK, MAX_STOCK)
 
     return {
-        "Apple": {"price": 100, "image": "🍎", "stock": num1, "barcode": "001"},
-        "Banana": {"price": 100, "image": "🍌", "stock": num2, "barcode": "002"},
-        "Orange": {"price": 80, "image": "🍊", "stock": num3, "barcode": "003"},
-        "Lemon": {"price": 80, "image": "🍋", "stock": num4, "barcode": "004"},
-        "Mango": {"price": 50, "image": "🥭", "stock": num5, "barcode": "005"},
-        "Cucumber": {"price": 80, "image": "🥒", "stock": num6, "barcode": "006"},
-        "Carrot": {"price": 80, "image": "🥕", "stock": num7, "barcode": "007"},
-        "Avacado": {"price": 80, "image": "🥑", "stock": num8, "barcode": "008"}
+        "Apple": {"price": 500, "image": "🍎", "stock": num1, "barcode": "001"},
+        "Banana": {"price": 800, "image": "🍌", "stock": num2, "barcode": "002"},
+        "Orange": {"price": 200, "image": "🍊", "stock": num3, "barcode": "003"},
+        "Lemon": {"price": 150, "image": "🍋", "stock": num4, "barcode": "004"},
+        "Mango": {"price": 200, "image": "🥭", "stock": num5, "barcode": "005"},
+        "Cucumber": {"price": 300, "image": "🥒", "stock": num6, "barcode": "006"},
+        "Carrot": {"price": 100, "image": "🥕", "stock": num7, "barcode": "007"},
+        "Avacado": {"price": 550, "image": "🥑", "stock": num8, "barcode": "008"}
     }
 
 
@@ -213,16 +213,16 @@ def draw_buttons(canvas, products, cart, total_price, user_discount, payment_met
     for i, (item, info) in enumerate(products.items()):
         x = START_X
         y = START_Y + i * GAP_Y
-        rect = canvas.create_rectangle(x, y, x + BUTTON_WIDTH, y + BUTTON_HEIGHT)
-        # --error-- canvas.set_fill_color("white")
-        canvas.create_rectangle(x, y, BUTTON_WIDTH, BUTTON_HEIGHT)
-        # --error-- canvas.set_fill_color("black")
+        rect = canvas.create_rectangle(x, y, x + BUTTON_WIDTH, y + BUTTON_HEIGHT, "violet", "black")
+        # 
+        #canvas.create_rectangle(x, y, BUTTON_WIDTH, BUTTON_HEIGHT, "white", "black")
+        # 
         stock = info["stock"]
-        canvas.create_text(x + 5, y + 25, f"{info['image']} {item} - ₦{info['price']} ({stock})", color="brown", font="Courier", font_size=14)
+        canvas.create_text(x + 5, y + 5, f"{info['image']} {item} - ₦{info['price']} ({stock})", color="blue", font="Courier", font_size=14)
         product_buttons.append((rect, item))
 
-    # --error-- canvas.set_fill_color("blue")
-    canvas.create_text(400, 130, f"Total: ₦{total_price:,.2f}", color="blue", font="Courier", font_size=18)
+    # 
+    canvas.create_text(400, 70, f"Total: ₦{total_price:,.2f}", color="blue", font="Courier", font_size=18)
 
     draw_cart_panel(canvas, cart)
     draw_payment_selector(canvas, payment_method)
@@ -230,8 +230,8 @@ def draw_buttons(canvas, products, cart, total_price, user_discount, payment_met
 
 
 def draw_cart_panel(canvas, cart):
-    # --error-- canvas.set_fill_color("black")
-    canvas.create_text(400, CART_PANEL_START_Y - 20, "Cart:", color="blue", font="Courier", font_size=16)
+    # 
+    canvas.create_text(400, CART_PANEL_START_Y - 20, "Cart 🛒:", color="blue", font="Courier", font_size=16)
     y = CART_PANEL_START_Y
     cart_summary = {}
     for item, price in cart:
@@ -247,19 +247,19 @@ def draw_cart_panel(canvas, cart):
 
 
 def draw_payment_selector(canvas, payment_method):
-    # --error-- canvas.set_fill_color("black")
-    canvas.create_text(50, 280, "Payment Method:", color="violet", font="Courier", font_size=14)
+    # 
+    canvas.create_text(50, 280, "Payment Method:", color="brown", font="Courier", font_size=14)
     for i, method in enumerate(PAYMENT_OPTIONS):
         x = 50 + i * 110
         y = 300
-        canvas.create_rectangle(x, y, x + 100, y + 30)
-        # --error-- canvas.set_fill_color("white")
-        canvas.create_rectangle(x, y, 100, 30)
-        # --error-- canvas.set_fill_color("black")
-        canvas.create_text(x + 10, y + 20, method, color="violet", font="Courier", font_size=12)
+        canvas.create_rectangle(x, y, x + 85, y + 20, "violet", "black")
+        # 
+        #canvas.create_rectangle(x, y, 100, 30, "white", "black")
+        # 
+        canvas.create_text(x + 5, y + 5, method, color="blue", font="Courier", font_size=12)
         if method == payment_method:
-            # --error-- canvas.set_fill_color("blue")
-            canvas.create_text(x + 80, y + 20, "✓", color="yellow", font="Courier", font_size=14)
+            # 
+            canvas.create_text(x + 70, y + 5, "✓", color="red", font="Courier", font_size=14)
 
 
 def moving_objects(canvas):
