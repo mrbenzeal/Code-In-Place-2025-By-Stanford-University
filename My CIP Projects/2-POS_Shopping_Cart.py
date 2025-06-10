@@ -3,15 +3,15 @@ CIP_Section_5 PROJECT
 ----------------------
 File: POS_Shopping_Cart.py
 ---------------------------
-This Point-of-Sale (POS) Shopping Cart System is a solo-friendly, 
-interactive Python project using graphics.Canvas and random. 
-It simulates a real-world retail checkout experience with product selection 
-via buttons or barcode input, a dynamic cart display, stock management, 
-discount codes, tax, and payment method selection (cash, card, or transfer). 
-Users can clear carts, see visual updates, and receive real-time total cost calculations 
-with animation for bulk discounts. 
-Receipts are exported with customer names, timestamps, and loyalty points. 
-Admin functions include restocking and viewing daily sales reports.
+This is a Point-of-Sale (POS) Shopping Cart System for a Nigerian Fruit Shop.
+- It is a solo-friendly, interactive Python project using the Python graphics.Canvas, time, os and random imports. 
+- It simulates a real-world retail checkout experience with product selection 
+  via buttons or barcode input, a dynamic cart display, stock management, 
+  discount codes, tax, and payment method selection (cash, card, or transfer). 
+- Users can clear carts, see visual updates, and receive real-time total cost calculations 
+  with animation for bulk discounts. 
+- Receipts are exported with customer names, timestamps, and loyalty points. 
+- Admin functions include restocking and viewing daily sales reports.
 """
 
 from graphics import Canvas
@@ -30,6 +30,8 @@ BULK_DISCOUNT_THRESHOLD = 300
 BULK_DISCOUNT = 50
 TAX_RATE = 0.05
 PAYMENT_OPTIONS = ["Cash", "Card", "Transfer"]
+MIN_STOCK = 5
+MAX_STOCK = 20
 BUTTON_WIDTH = 100
 BUTTON_HEIGHT = 40
 START_X = 50
@@ -38,8 +40,6 @@ CART_PANEL_START_Y = 200
 GAP_Y = 60
 BALL_SIZE = 20
 DELAY = 0.01    # seconds to wait between each update
-MIN_STOCK = 5
-MAX_STOCK = 20
 
 
 # --- Main Entry ---
@@ -76,8 +76,8 @@ def main():
     while True:
         command = input("Command (barcode/restock/checkout/exit): ").strip().lower()
         if command == "barcode":
-            code = input("Enter barcode: ")
-            cart, total_price = simulate_barcode_scan(code, products, cart, total_price)
+            barcode = input("Enter barcode: ")
+            cart, total_price = simulate_barcode_scan(barcode, products, cart, total_price)
             draw_buttons(canvas, products, cart, total_price, user_discount, payment_method)
         elif command == "restock":
             restock(products)
@@ -105,11 +105,21 @@ def get_initial_products():
     num1 = random.randint(MIN_STOCK, MAX_STOCK)
     num2 = random.randint(MIN_STOCK, MAX_STOCK)
     num3 = random.randint(MIN_STOCK, MAX_STOCK)
+    num4 = random.randint(MIN_STOCK, MAX_STOCK)
+    num5 = random.randint(MIN_STOCK, MAX_STOCK)
+    num6 = random.randint(MIN_STOCK, MAX_STOCK)
+    num7 = random.randint(MIN_STOCK, MAX_STOCK)
+    num8 = random.randint(MIN_STOCK, MAX_STOCK)
 
     return {
-        "Apple": {"price": 100, "image": "🍎", "stock": num1, "barcode": "111"},
-        "Banana": {"price": 50, "image": "🍌", "stock": num2, "barcode": "222"},
-        "Orange": {"price": 80, "image": "🍊", "stock": num3, "barcode": "333"}
+        "Apple": {"price": 100, "image": "🍎", "stock": num1, "barcode": "001"},
+        "Banana": {"price": 100, "image": "🍌", "stock": num2, "barcode": "002"},
+        "Orange": {"price": 80, "image": "🍊", "stock": num3, "barcode": "003"},
+        "Lemon": {"price": 80, "image": "🍋", "stock": num4, "barcode": "004"},
+        "Mango": {"price": 50, "image": "🥭", "stock": num5, "barcode": "005"},
+        "Cucumber": {"price": 80, "image": "🥒", "stock": num6, "barcode": "006"},
+        "Carrot": {"price": 80, "image": "🥕", "stock": num7, "barcode": "007"},
+        "Avacado": {"price": 80, "image": "🥑", "stock": num8, "barcode": "008"}
     }
 
 
@@ -146,14 +156,14 @@ def simulate_barcode_scan(barcode, products, cart, total_price):
             else:
                 print(f"⚠️ {name} is out of stock!")
             break
-    else:
-        print("❌ Unknown barcode")
+        else:
+            print("❌ Unknown barcode")
     return cart, total_price
 
 
 def restock(products):
     for item in products:
-        products[item]["stock"] += 5
+        products[item]["stock"] += random.randint(MIN_STOCK, MAX_STOCK)
     print("✅ Products restocked.")
 
 
