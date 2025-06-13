@@ -1,0 +1,240 @@
+"""
+CIP_Section_5 PROJECT
+----------------------
+File: POS_Shopping_Cart.py
+---------------------------
+This Point-of-Sale (POS) Shopping Cart System is a solo-friendly, 
+interactive Python project using graphics.Canvas and random. 
+It simulates a real-world retail checkout experience with product selection 
+via buttons or barcode input, a dynamic cart display, stock management, 
+discount codes, tax, and payment method selection (cash, card, or transfer). 
+Users can clear carts, see visual updates, and receive real-time total cost calculations 
+with animation for bulk discounts. 
+Receipts are exported with customer names, timestamps, and loyalty points. 
+Admin functions include restocking and viewing daily sales reports.
+
+The code is modular, well-commented, and designed for educational use 
+at an intermediate Python level.
+"""
+
+from graphics import Canvas
+import random
+import os
+import time
+
+# --- Constants ---
+CANVAS_WIDTH = 600
+CANVAS_HEIGHT = 400
+TAX_RATE = 0.05
+DISCOUNT_CODES = {"SAVE10": 10, "SAVE20": 20}
+DISCOUNT_CHANCE = 0.2
+BULK_DISCOUNT_THRESHOLD = 300
+BULK_DISCOUNT = 50
+BUTTON_WIDTH = 100
+BUTTON_HEIGHT = 40
+START_X = 50
+START_Y = 50
+GAP_Y = 60
+CART_PANEL_START_Y = 200
+PAYMENT_OPTIONS = ["Cash", "Card", "Transfer"]
+
+
+# --- Main Entry ---
+def main():
+    canvas = Canvas(CANVAS_WIDTH, CANVAS_HEIGHT)
+
+    # creating the canvas title line of text
+    canvas_title = canvas.create_text(220, 5, "POS Shopping Cart System", color="blue", font="Courier", font_size=10)
+
+    products = {
+        "Apple": {"price": 100, "image": "🍎", "stock": 5, "barcode": "111"},
+        "Banana": {"price": 50, "image": "🍌", "stock": 5, "barcode": "222"},
+        "Orange": {"price": 80, "image": "🍊", "stock": 5, "barcode": "333"}
+    }
+
+    customer_name = input("Enter customer name: ")
+    product_buttons = []
+    clear_cart_button = []
+    checkout_button = []
+    selected_payment_button = []
+    cart = []
+    total_price = 0
+    user_discount = 0
+    paid = 0
+    payment_method = "Cash"
+    daily_sales = []
+
+    draw_buttons(canvas, products, product_buttons, clear_cart_button, checkout_button, selected_payment_button, cart, total_price, payment_method)
+    # canvas.set_mouse_click_handler(...)  # Mouse event handler goes here
+
+    canvas.wait_for_click()
+
+    while True:
+        command = input("Command (barcode/restock/report/exit): ").strip().lower()
+        if command == "report":
+            show_daily_report(total_price, customer_name, daily_sales)
+        elif command == "exit":
+            print("👋 Exiting POS...")
+            break
+    
+    export_receipt_to_file(cart, customer_name, total_price, user_discount, paid, payment_method, daily_sales)
+
+
+# --- GUI Drawing Functions ---
+def draw_buttons(canvas, products, product_buttons, clear_cart_button, checkout_button, selected_payment_button, cart, total_price, payment_method):
+    # This clears every object on the canvas
+    canvas.clear()
+    
+    canvas.create_text(80, 10, "Click a product or scan barcode to add to cart", color="red", font="Courier", font_size=15)
+
+    product_buttons.clear()
+    for i, (item, info) in enumerate(products.items()):
+        x = START_X
+        y = START_Y + i * GAP_Y
+        rect = canvas.create_rectangle(x, y, x + BUTTON_WIDTH, y + BUTTON_HEIGHT, "black", "violet")
+        
+        # canvas.create_rectangle(x, y, BUTTON_WIDTH, BUTTON_HEIGHT, "white", "black")
+       
+        stock = info["stock"]
+        canvas.create_text(x + 5, y + 5, f"{info['image']} {item} - ₦{info['price']} ({stock})", color="blue", font="Courier", font_size=14)
+        product_buttons.append((rect, item))
+
+    clear_cart_button.append(canvas.create_rectangle(250, 50, 350, 90, "yellow"))
+    
+    # canvas.create_rectangle(250, 50, 100, 40, "red")
+    
+    canvas.create_text(260, 75, "Clear Cart", color="brown", font="Courier", font_size=14)
+
+    checkout_button.append(canvas.create_rectangle(250, 100, 350, 140, "yellow"))
+    
+    # canvas.create_rectangle(250, 100, 100, 40, "pink")
+    
+    canvas.create_text(265, 125, "Checkout", color="blue", font="Courier", font_size=14)
+
+   
+    # Creating the text "Total: ₦", which is the total cost of the products on the canvas
+    canvas.create_text(400, 70, f"Total: ₦{total_price:,.2f}", color="blue", font="Courier", font_size=18)
+
+    draw_cart_panel(canvas, cart)
+    draw_payment_selector(canvas, selected_payment_button, payment_method)
+
+
+def draw_cart_panel(canvas, cart):
+    """Displays the list of items and totals in the cart"""
+    
+    # --error-- canvas.create_text("Cart:", 400, CART_PANEL_START_Y - 20, "16px Arial")
+    y = CART_PANEL_START_Y
+    cart_summary = {}
+    for item, price in cart:
+        if item in cart_summary:
+            cart_summary[item]["qty"] += 1
+            cart_summary[item]["total_price"] += price
+        else:
+            cart_summary[item] = {"qty": 1, "total_price": price}
+
+    for item, data in cart_summary.items():
+        canvas.create_text(400, y, f"{item} x{data['qty']} - ₦{data['total']:,.2f}", color="blue", font="Courier", font_size=14)
+        y += 20
+
+
+def draw_payment_selector(canvas, selected_payment_button, payment_method):
+    """Draws buttons for selecting payment method"""
+    selected_payment_button.clear()
+    
+    # Creating the text "Payment Method:" on the canvas
+    canvas.create_text(50, 280, "Payment Method:", color="red", font="Courier", font_size=14)
+    for i, method in enumerate(PAYMENT_OPTIONS):
+        x = 50 + i * 110
+        y = 300
+        button = canvas.create_rectangle(x, y, x + 100, y + 30, "violet")
+        
+        #canvas.create_rectangle(x, y, 100, 30, "white", "black")
+        
+        canvas.create_text(x + 10, y + 20, "payment method", color="blue", font="Courier", font_size=12)
+        
+        if method == payment_method:
+                
+            canvas.create_text(x + 80, y + 20, "✓", color="blue", font="Courier", font_size=14)
+            # canvas.create_text(x + 70, y + 5, "✓", color="red", font="Courier", font_size=14)
+        selected_payment_button.append((button, payment_method))
+
+
+# --- Receipt and Reporting Functions ---
+def export_receipt_to_file(cart, customer_name, total_price, user_discount, paid, payment_method, daily_sales):
+    """Generates and saves a receipt text file with a unique name"""
+    # final_total_price, tax = calculate_final_total_price(total_price, user_discount)
+    timestamp = time.strftime("%Y-%m-%d_%H-%M-%S")
+    filename = f"receipt_{customer_name}_{timestamp}.txt"
+    receipt_text = generate_receipt_text(cart, customer_name, total_price, user_discount, paid, payment_method)
+    with open(filename, "w") as f:
+        f.write(receipt_text)
+    print(f"📟 Receipt exported: {filename}")
+    record_sale(total_price, customer_name, daily_sales)
+    award_loyalty_points(customer_name, total_price)
+
+
+def generate_receipt_text(cart, customer_name, total_price, user_discount, paid, payment_method):
+    """Returns the receipt content as string"""
+    final_total_price, tax = calculate_final_total_price(total_price, user_discount)
+    lines = []
+    lines.append(f"Customer: {customer_name}")
+    lines.append(f"Time: {time.strftime('%Y-%m-%d %H:%M:%S')}")
+    lines.append("--- Items ---")
+    for item, price in cart:
+        lines.append(f"{item}: ₦{price:,.2f}")
+    lines.append(f"Subtotal: ₦{total_price:,.2f}")
+    lines.append(f"Tax: ₦{tax:,.2f}")
+    if user_discount:
+        lines.append(f"Discount: ₦{user_discount:,.2f}")
+    lines.append(f"Total Due: ₦{final_total_price:,.2f}")
+    lines.append(f"Paid: ₦{paid:,.2f}")
+    lines.append(f"Change: ₦{paid - final_total_price:,.2f}")
+    lines.append(f"Payment Method: {payment_method}")
+    lines.append(f"Loyalty Points Earned: {int(final_total_price / 100)}")
+    return "\n".join(lines)
+
+
+def calculate_final_total_price(total_price, user_discount):
+    """Computes final total price including tax and discount"""
+    tax = total_price * TAX_RATE
+    final_total_price = total_price + tax - user_discount
+    return final_total_price, tax
+
+
+def award_loyalty_points(customer_name, total_price):
+    """Updates customer profile with earned loyalty points"""
+    points = int(total_price / 100)
+    loyalty_points = {}
+
+    if customer_name not in loyalty_points:
+        loyalty_points[customer_name] = 0
+    loyalty_points[customer_name] += points
+    print(f"🌟 {customer_name} earned {points} points. Total: {loyalty_points[customer_name]}")
+
+
+def record_sale(total_price, customer_name, daily_sales):
+    """Appends transaction to daily sales log"""
+    timestamp = time.strftime("%Y-%m-%d %H:%M:%S")
+    daily_sales.append((timestamp, customer_name, total_price))
+
+
+def show_daily_report(total_price, customer_name, daily_sales):
+    """Displays the daily sales summary in terminal"""
+    print("\n📈 Daily Sales Report")
+    print("----------------------------")
+    total_day = 0
+    for timestamp, customer_name, total_price in daily_sales:
+        print(f"{timestamp} - {customer_name}: ₦{total_price:,.2f}")
+        total_day += total_price
+    print("----------------------------")
+    print(f"Total Sales: ₦{total_day:,.2f}\n")
+
+
+"""
+# This provided line is required at the end of Python file 
+  to call the main() function.
+# It allows the script to be run as the main program or imported 
+  without executing the main function immediately.
+"""
+if __name__ == "__main__":
+    main()
