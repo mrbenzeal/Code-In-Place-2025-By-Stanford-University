@@ -1,17 +1,32 @@
 """
-CIP_Section_5 PROJECT
-----------------------
+CIP_Section_5 PROJECT - Obinna Ani
+-----------------------------------
 File: POS_Shopping_Cart.py
 ---------------------------
 This is a Point-of-Sale (POS) Shopping Cart System for a Nigerian Fruit Shop.
 - It is a solo-friendly, interactive Python project using the Python graphics.Canvas, time, os and random imports. 
 - It simulates a real-world retail checkout experience with product selection 
-  via barcode input, a dynamic cart display, stock management, 
-  tax, and payment method selection (cash, card, or transfer). 
-- Users can clear carts, see visual updates, and receive real-time total cost calculations 
-  with animation for bulk discounts. 
+  via barcode input, a dynamic cart display, stock management, tax. 
+- Users can clear carts, see visual updates, and receive real-time total cost calculations. 
 - Receipts are exported with customer names, timestamps, and loyalty points. 
-- Admin functions include restocking and viewing daily sales reports.
+- Admin function also include restocking.
+
+NOTE:
+-----
+This project is subject to more improved functionalities like:
+- Click buttons effectiveness for objects on the canvas.
+- Improved graphical animations.
+- A better decomposited program.
+- And more.
+
+VOTE OF THANKS:
+---------------
+I wish to thank:
+- My Section Leader: Anna Q
+- My CIP Section Members
+- Chris Piech & Mehran Sahami
+- And Stanford University's Code in Place 2025 staffs
+For making my python learning journey pleasurable.
 """
 
 from graphics import Canvas
@@ -19,11 +34,11 @@ import random
 import os
 import time
 
-# --- Canvas Constants --- 
+# --- Canvas Constants --- #
 CANVAS_WIDTH = 600
 CANVAS_HEIGHT = 400
 
-# --- Constant Definitions ---
+# --- Constant Definitions --- #
 DISCOUNT_CHANCE = 0.2
 BULK_DISCOUNT_THRESHOLD = 300
 BULK_DISCOUNT = 50
@@ -42,7 +57,9 @@ BALL_SIZE = 20
 DELAY = 0.01    # seconds to wait between each update
 
 
-# --- Main Entry ---
+""" Project Main Function """
+
+# --- Main Entry --- #
 def main():
     # Initializing canvas
     canvas = Canvas(CANVAS_WIDTH, CANVAS_HEIGHT)
@@ -51,10 +68,10 @@ def main():
     print(" POS Shopping Cart System")
     print("**************************")
 
-    # the home page design
+    # the welcome home page design
     welcome_home_page(canvas)
     draw_welcome_button(canvas)
-    draw_enter_name_button(canvas)    
+    draw_enter_name_button(canvas) 
 
     # Initializing the canvas' local variables
     products = get_initial_products()
@@ -67,21 +84,16 @@ def main():
     total_price = 0
     user_discount = 0
 
-    state = (cart, products, loyalty_points, daily_sales, selected_payment_button, payment_method, customer_name, total_price, user_discount)
+    # the POS interactive page
     draw_buttons(canvas, products, cart, total_price, user_discount, selected_payment_button, payment_method)
-    
-    def handler(x, y):
-        nonlocal state
-        cart, products, loyalty_points, daily_sales, selected_payment_button, payment_method, customer_name, total_price, user_discount = state
-        cart, total_price, user_discount = on_mouse_click(canvas, x, y, state)
-        state = (cart, products, loyalty_points, daily_sales, selected_payment_button, payment_method, customer_name, total_price, user_discount)
-
+    draw_click_here(canvas)
     canvas.wait_for_click()
-
     pos_system_option_panel(canvas, cart, products, loyalty_points, daily_sales, selected_payment_button, payment_method, customer_name, total_price, user_discount)
 
 
-# --- The Home Pages ---
+""" Project Helper Functions """
+
+# --- The Home Pages --- #
 def welcome_home_page(canvas):
     # creating the canvas' title line of text "POS Shopping Cart System" and screen saver.
     canvas_title = canvas.create_text(220, 5, "POS Shopping Cart System", color="blue", font="Courier", font_size=10)
@@ -94,7 +106,7 @@ def goodbye_home_page(canvas):
     screen_saver = canvas.create_image(5, 15, "CodeInPlace.png")
 
 
-# --- Data Definitions ---
+# --- Data Definitions --- #
 def get_initial_products():
     # Generate random stock numbers
     num1 = random.randint(MIN_STOCK, MAX_STOCK)
@@ -118,29 +130,9 @@ def get_initial_products():
     }
 
 
-# --- Event Handling ---
-def on_mouse_click(canvas, x, y, state):
-    cart, products, loyalty_points, daily_sales, selected_payment_button, payment_method, customer_name, total_price, user_discount = state
-
-    for product_rect, item in draw_buttons(canvas, products, cart, total_price, user_discount, selected_payment_button, payment_method):
-        if canvas.get_object_at(x, y) == product_rect:
-            if products[item]["stock"] > 0:
-                products[item]["stock"] -= 1
-                cart.append((item, products[item]["price"]))
-                total_price += products[item]["price"]
-                if total_price > BULK_DISCOUNT_THRESHOLD and random.random() < DISCOUNT_CHANCE:
-                    user_discount += BULK_DISCOUNT
-                    print(f"🎉 Bulk discount applied: ₦{BULK_DISCOUNT}")
-            else:
-                print(f"⚠️ {item} is out of stock!")
-            break
-
-    draw_buttons(canvas, products, cart, total_price, user_discount, selected_payment_button, payment_method)
-    return cart, total_price, user_discount
-
-
-# --- Option Handlers ---
+# --- Option Handlers --- #
 def pos_system_option_panel(canvas, cart, products, loyalty_points, daily_sales, selected_payment_button, payment_method, customer_name, total_price, user_discount):
+    
     while True:
         option = input("Option (barcode/restock/checkout/exit): ").strip().lower()
         if option == "barcode":
@@ -154,6 +146,7 @@ def pos_system_option_panel(canvas, cart, products, loyalty_points, daily_sales,
             draw_buttons(canvas, products, cart, total_price, user_discount, selected_payment_button, payment_method)
         elif option == "checkout":
             draw_payment_selector(canvas, selected_payment_button, payment_method)
+            canvas.wait_for_click()
             try:
                 payment_received = float(input("Enter amount paid: ₦"))
             except ValueError:
@@ -166,6 +159,7 @@ def pos_system_option_panel(canvas, cart, products, loyalty_points, daily_sales,
         elif option == "exit":
             print("👋 Exiting POS...")
             canvas.clear()
+            # the goodbye home page design
             goodbye_home_page(canvas)
             draw_goodbye_button(canvas)
             draw_moving_ball(canvas)
@@ -230,7 +224,7 @@ def checkout(cart, customer_name, total_price, user_discount, payment_received, 
     return []
 
 
-# --- GUI Drawing Functions ---
+# --- GUI Drawing Functions --- #
 def draw_welcome_button(canvas):
     # draw the rectangles  
     black_rect = canvas.create_rectangle(0, 310, RECT_SIZE, 330, 'black', 'red')
@@ -252,17 +246,19 @@ def draw_enter_name_button(canvas):
     canvas.create_text(232, 335, "ENTER COSTOMER NAME", color="blue", font="Courier", font_size=12)
 
 
+def draw_click_here(canvas):
+    click_here_button = canvas.create_rectangle(260, 45, 340, 65, "white", "black")    
+    canvas.create_text(265, 50, "CLICK HERE", color="black", font="Courier", font_size=12)
+    canvas.create_text(260, 70, "To Make A", color="red", font="Courier", font_size=13)
+    canvas.create_text(260, 85, "Choice", color="red", font="Courier", font_size=13)
+
+
 def draw_buttons(canvas, products, cart, total_price, user_discount, selected_payment_button, payment_method):
     # This clears every object on the canvas
     canvas.clear()
 
     # Making the background color of my canvas lightgreen
     canvas.create_rectangle(0, 0, CANVAS_WIDTH, CANVAS_HEIGHT, 'lightgreen')
-
-    click_here_button = canvas.create_rectangle(260, 45, 340, 65, "white", "black")    
-    canvas.create_text(265, 50, "CLICK HERE", color="black", font="Courier", font_size=12)
-    canvas.create_text(260, 70, "To Make A", color="red", font="Courier", font_size=13)
-    canvas.create_text(260, 85, "Choice", color="red", font="Courier", font_size=13)
 
     # Creating the buttons for the products on the canvas
     product_buttons = []
@@ -318,10 +314,7 @@ def draw_payment_selector(canvas, selected_payment_button, payment_method):
         button = canvas.create_rectangle(x, y, x + 85, y + 20, "violet", "black")
         
         canvas.create_text(x + 5, y + 5, method, color="blue", font="Courier", font_size=12)
-    
-        if method == payment_method:
-        
-            canvas.create_text(x + 70, y + 5, "✓", color="red", font="Courier", font_size=14)
+
     selected_payment_button.append((button, payment_method))
 
 
