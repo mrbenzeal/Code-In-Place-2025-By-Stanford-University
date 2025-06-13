@@ -1,0 +1,101 @@
+# POS_Shopping_Cart rough work
+
+from graphics import Canvas
+import random
+import time
+    
+CANVAS_WIDTH = 600
+CANVAS_HEIGHT = 400
+RECT_SIZE = 50 
+BALL_SIZE = 20
+DELAY = 0.01    # seconds to wait between each update
+
+
+def main():
+    canvas = Canvas(CANVAS_WIDTH, CANVAS_HEIGHT)
+    # TODO: your code here!
+
+    draw_welcome_button(canvas)
+    draw_goodbye_button(canvas)
+    #draw_enter_name_button(canvas)
+    moving_ball(canvas)
+
+
+
+def draw_enter_name_button(canvas):
+    canvas.create_rectangle(225, 330, 375, 350, "violet", "black")
+    canvas.create_text(232, 335, "ENTER COSTOMER NAME", color="blue", font="Courier", font_size=12)
+
+
+def moving_ball(canvas):
+    start_x = 0
+    end_x = BALL_SIZE
+
+    
+    # animation loop for the brown ball
+    
+    for i in range(10):
+        # creating brown_ball and my_image; and storing them in variables
+        brown_ball = canvas.create_oval(start_x, 370, end_x, BALL_SIZE + 370, 'brown')
+        # my_image = canvas.create_image(x, y, 'image')
+        start_x += BALL_SIZE
+        end_x += BALL_SIZE
+        
+    # change on the x and y cordinates for the ball
+    change_x = 2
+    change_y = 1
+
+    while(True):
+        for i in range(10):
+            left_x = canvas.get_left_x(brown_ball)
+            top_y = canvas.get_top_y(brown_ball)
+
+            # change direction if ball reaches an edge
+            if left_x < 0 or left_x + BALL_SIZE >= CANVAS_WIDTH:
+                change_x = -change_x
+                    
+            if top_y < 370 or top_y + BALL_SIZE >= CANVAS_HEIGHT:
+                change_y = -change_y
+
+            # update the ball
+            canvas.move(brown_ball, change_x, change_y)
+                    
+            # pause
+            time.sleep(DELAY)
+            
+    
+def draw_welcome_button(canvas):
+    # draw the rectangles  
+    black_rect = canvas.create_rectangle(0, 310, RECT_SIZE, 330, 'black', 'red')
+    white_rect = canvas.create_rectangle(CANVAS_WIDTH, 310, CANVAS_WIDTH - RECT_SIZE, 330, 'white', 'red')
+    
+    # animation loop YOU ARE WELCOME
+    while canvas.get_left_x(black_rect) < (CANVAS_WIDTH / 2):
+        canvas.move(black_rect, 1, 0)
+        canvas.move(white_rect, -1, 0)
+   
+        # pause
+        time.sleep(DELAY)
+    canvas.create_text(252, 315, "YOU ARE", color="black", font="Courier", font_size=11)
+    canvas.create_text(303, 315, "WELCOME", color="white", font="Courier", font_size=11)
+
+
+def draw_goodbye_button(canvas):
+    # draw the rectangles  
+    black_rect = canvas.create_rectangle(0, 330, RECT_SIZE, 350, 'black', 'blue')
+    white_rect = canvas.create_rectangle(CANVAS_WIDTH, 330, CANVAS_WIDTH - RECT_SIZE, 350, 'white', 'blue')
+    
+    # animation loop YOU ARE WELCOME
+    while canvas.get_left_x(black_rect) < (CANVAS_WIDTH / 2):
+        canvas.move(black_rect, 1, 0)
+        canvas.move(white_rect, -1, 0)
+   
+        # pause
+        time.sleep(DELAY)
+    canvas.create_text(260, 335, "GOOD", color="black", font="Courier", font_size=11)
+    canvas.create_text(315, 335, "BYE", color="white", font="Courier", font_size=11)
+
+
+
+if __name__ == '__main__':
+    main()
