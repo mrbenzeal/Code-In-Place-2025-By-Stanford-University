@@ -7,8 +7,8 @@ This is a Nigerian Fruit Shop's Point-of-Sale (POS) Shopping Cart System.
 - It is a solo-friendly, interactive Python project using Python graphics canvas, time, os and random imports. 
 - It simulates a real-world retail checkout experience with product selection 
   via barcode input, a dynamic cart display, stock management, and tax. 
-- Users can clear carts, see visual updates, and receive real-time total cost calculations. 
-- Receipts are exported with customer names, timestamps, and loyalty points. 
+- User can clear carts, see visual updates, and receive real-time total cost calculations. 
+- Receipts can be viewed or exported with customer's name, timestamps, and loyalty points. 
 - Admin functions also include restocking.
 
 NOTE:
@@ -42,7 +42,7 @@ CANVAS_HEIGHT = 400
 DISCOUNT_CHANCE = 0.2
 BULK_DISCOUNT_THRESHOLD = 300
 BULK_DISCOUNT = 50
-TAX_RATE = 0.05
+TAX_RATE = 0.0005
 PAYMENT_OPTIONS = ["Cash", "Card", "Transfer"]
 MIN_STOCK = 5
 MAX_STOCK = 20
@@ -134,7 +134,7 @@ def get_initial_products():
 def pos_system_option_panel(canvas, cart, products, loyalty_points, daily_sales, selected_payment_button, payment_method, customer_name, total_price, user_discount):
     
     while True:
-        option = input("Option (barcode/restock/checkout/exit): ").strip().lower()
+        option = input("Option (barcode/restock/checkout/view/exit): ").strip().lower()
         if option == "barcode":
             # This creates the "Input a product barcode to add to cart" text instruction on the canvas
             canvas.create_text(5, 30, "Input a barcode to add product to cart", color="red", font="Courier", font_size=11)
@@ -156,6 +156,8 @@ def pos_system_option_panel(canvas, cart, products, loyalty_points, daily_sales,
             total_price = 0
             user_discount = 0
             draw_buttons(canvas, products, cart, total_price, user_discount, selected_payment_button, payment_method)
+        elif option == "view":
+            display_latest_receipt()
         elif option == "exit":
             print("👋 Exiting POS...")
             canvas.clear()
@@ -199,7 +201,7 @@ def checkout(cart, customer_name, total_price, user_discount, payment_received, 
     filename = f"receipt_{customer_name}_{timestamp}.txt"
     final_total, tax = calculate_final_total(total_price, user_discount)
     with open(filename, "w") as f:
-        f.write(f"Customer: {customer_name}\n")
+        f.write(f"Customer Name: {customer_name}\n")
         f.write(f"Time: {time.strftime('%Y-%m-%d %H:%M:%S')}\n")
         f.write("--- Items ---\n")
         for item, price in cart:
@@ -222,6 +224,17 @@ def checkout(cart, customer_name, total_price, user_discount, payment_received, 
     print(f"🌟 {customer_name} earned {points} points. Total: {loyalty_points[customer_name]}")
     daily_sales.append((timestamp, customer_name, final_total))
     return []
+
+
+def display_latest_receipt():
+    receipts = [f for f in os.listdir() if f.startswith("receipt_") and f.endswith(".txt")]
+    if not receipts:
+        print("❌ No receipts found.")
+        return
+    latest = max(receipts, key=os.path.getctime)
+    print(f"\n📄 Displaying latest receipt: {latest}\n" + "-"*29)
+    with open(latest, "r") as f:
+        print(f.read())
 
 
 # --- GUI Drawing Functions --- #
