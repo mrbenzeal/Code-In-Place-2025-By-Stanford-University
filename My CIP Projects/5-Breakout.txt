@@ -1,6 +1,8 @@
 Write the classic Atari arcade game of Breakout!
 You'll use animation to draw a bouncing ball, use your mouse to control the player's paddle movements, and utilize collision detection.
 
+link: https://codeinplace.stanford.edu/cip5/ide/a/breakout
+
 Assignment
 Your job in this assignment is to write the classic arcade game of Breakout, which was invented by Steve Wozniak before he founded Apple with Steve Jobs (moment of silence). It is a large assignment, but entirely manageable as long as you break the problem up into pieces.
 
