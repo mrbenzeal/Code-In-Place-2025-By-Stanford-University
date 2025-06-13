@@ -8,9 +8,10 @@ and is responsible for executing the primary functionality
 of printing to the console.
 """
 def main():
-
-
-
+    while front_is_clear():
+        put_beeper()
+        move()
+    put_beeper()
 
 
 """
