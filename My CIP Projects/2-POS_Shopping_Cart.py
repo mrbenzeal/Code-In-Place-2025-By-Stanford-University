@@ -64,11 +64,11 @@ def main():
     # Initializing canvas
     canvas = Canvas(CANVAS_WIDTH, CANVAS_HEIGHT)
 
-    # print to terminal
+    # Print to terminal
     print(" POS Shopping Cart System")
     print("**************************")
 
-    # the welcome home page design
+    # The welcome home page design
     welcome_home_page(canvas)
     draw_welcome_button(canvas)
     draw_enter_name_button(canvas) 
@@ -95,13 +95,13 @@ def main():
 
 # --- The Home Pages --- #
 def welcome_home_page(canvas):
-    # creating the canvas' title line of text "POS Shopping Cart System" and screen saver.
+    # Creating the canvas title line of text "POS Shopping Cart System" and screen saver.
     canvas_title = canvas.create_text(220, 5, "POS Shopping Cart System", color="blue", font="Courier", font_size=10)
     screen_saver = canvas.create_image(5, 15, "fruit_shop.png")
 
 
 def goodbye_home_page(canvas):
-    # creating the canvas' title line of text "POS Shopping Cart System" and screen saver.
+    # Creating the canvas title line of text "POS Shopping Cart System" and screen saver.
     canvas_title = canvas.create_text(220, 5, "POS Shopping Cart System", color="blue", font="Courier", font_size=10)
     screen_saver = canvas.create_image(5, 15, "CodeInPlace.png")
 
@@ -159,7 +159,7 @@ def pos_system_option_panel(canvas, cart, products, loyalty_points, daily_sales,
         elif option == "exit":
             print("👋 Exiting POS...")
             canvas.clear()
-            # the goodbye home page design
+            # The goodbye home page design
             goodbye_home_page(canvas)
             draw_goodbye_button(canvas)
             draw_moving_ball(canvas)
@@ -257,7 +257,7 @@ def draw_buttons(canvas, products, cart, total_price, user_discount, selected_pa
     # This clears every object on the canvas
     canvas.clear()
 
-    # Making the background color of my canvas lightgreen
+    # Making the background colour of my canvas light-green
     canvas.create_rectangle(0, 0, CANVAS_WIDTH, CANVAS_HEIGHT, 'lightgreen')
 
     # Creating the buttons for the products on the canvas
@@ -339,7 +339,7 @@ def draw_moving_ball(canvas):
     brown_ball = canvas.create_oval(0, 370, BALL_SIZE, BALL_SIZE + 370, 'brown')
     # --ToDo-- my_image = canvas.create_image(x, y, 'image')
     
-    # change on the x and y cordinates for the ball
+    # change on the x and y coordinates for the ball
     change_x = 2
     change_y = 1
 
@@ -348,7 +348,7 @@ def draw_moving_ball(canvas):
         left_x = canvas.get_left_x(brown_ball)
         top_y = canvas.get_top_y(brown_ball)
 
-        # change direction if ball reaches an edge
+        # change direction if the ball reaches an edge
         if left_x < 0 or left_x + BALL_SIZE >= CANVAS_WIDTH:
             change_x = -change_x
         
@@ -363,7 +363,7 @@ def draw_moving_ball(canvas):
 
 
 """
-# This provided line is required at the end of Python file 
+# This provided line is required at the end of the Python file 
   to call the main() function.
 # It allows the script to be run as the main program or imported 
   without executing the main function immediately.
