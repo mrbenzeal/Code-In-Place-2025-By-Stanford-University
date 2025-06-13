@@ -6,8 +6,8 @@ File: POS_Shopping_Cart.py
 This is a Point-of-Sale (POS) Shopping Cart System for a Nigerian Fruit Shop.
 - It is a solo-friendly, interactive Python project using the Python graphics.Canvas, time, os and random imports. 
 - It simulates a real-world retail checkout experience with product selection 
-  via buttons or barcode input, a dynamic cart display, stock management, 
-  discount codes, tax, and payment method selection (cash, card, or transfer). 
+  via barcode input, a dynamic cart display, stock management, 
+  tax, and payment method selection (cash, card, or transfer). 
 - Users can clear carts, see visual updates, and receive real-time total cost calculations 
   with animation for bulk discounts. 
 - Receipts are exported with customer names, timestamps, and loyalty points. 
@@ -24,7 +24,6 @@ CANVAS_WIDTH = 600
 CANVAS_HEIGHT = 400
 
 # --- Constant Definitions ---
-# --ToDo-- DISCOUNT_CODES = {"SAVE10": 10, "SAVE20": 20}
 DISCOUNT_CHANCE = 0.2
 BULK_DISCOUNT_THRESHOLD = 300
 BULK_DISCOUNT = 50
@@ -38,69 +37,65 @@ START_X = 50
 START_Y = 45
 CART_PANEL_START_Y = 140
 GAP_Y = 30
+RECT_SIZE = 50
 BALL_SIZE = 20
 DELAY = 0.01    # seconds to wait between each update
 
 
 # --- Main Entry ---
 def main():
-    # Initialize canvas
+    # Initializing canvas
     canvas = Canvas(CANVAS_WIDTH, CANVAS_HEIGHT)
 
-    print("  POS Shopping Cart System")
-    print("<-------------------------->")
+    # print to terminal
+    print(" POS Shopping Cart System")
+    print("**************************")
 
-    # creating the canvas title line of text
-    canvas_title = canvas.create_text(220, 5, "POS Shopping Cart System", color="blue", font="Courier", font_size=10)
+    # the home page design
+    welcome_home_page(canvas)
+    draw_welcome_button(canvas)
+    draw_enter_name_button(canvas)    
 
+    # Initializing the canvas' local variables
     products = get_initial_products()
     cart = []
     loyalty_points = {}
     daily_sales = []
+    selected_payment_button = []
     payment_method = "Cash"
-    customer_name = input("Enter customer name: ")
+    customer_name = input("Enter customer name: ") # print to terminal
     total_price = 0
     user_discount = 0
 
-    state = (cart, products, loyalty_points, daily_sales, payment_method, customer_name, total_price, user_discount)
-    draw_buttons(canvas, products, cart, total_price, user_discount, payment_method)
-
+    state = (cart, products, loyalty_points, daily_sales, selected_payment_button, payment_method, customer_name, total_price, user_discount)
+    draw_buttons(canvas, products, cart, total_price, user_discount, selected_payment_button, payment_method)
+    
     def handler(x, y):
         nonlocal state
-        cart, products, loyalty_points, daily_sales, payment_method, customer_name, total_price, user_discount = state
+        cart, products, loyalty_points, daily_sales, selected_payment_button, payment_method, customer_name, total_price, user_discount = state
         cart, total_price, user_discount = on_mouse_click(canvas, x, y, state)
-        state = (cart, products, loyalty_points, daily_sales, payment_method, customer_name, total_price, user_discount)
+        state = (cart, products, loyalty_points, daily_sales, selected_payment_button, payment_method, customer_name, total_price, user_discount)
 
     canvas.wait_for_click()
 
-    while True:
-        command = input("Command (barcode/restock/checkout/exit): ").strip().lower()
-        if command == "barcode":
-            barcode = input("Enter barcode: ")
-            cart, total_price = simulate_barcode_scan(barcode, products, cart, total_price)
-            draw_buttons(canvas, products, cart, total_price, user_discount, payment_method)
-        elif command == "restock":
-            restock(products)
-            draw_buttons(canvas, products, cart, total_price, user_discount, payment_method)
-        elif command == "checkout":
-            try:
-                payment_received = float(input("Enter amount paid: ₦"))
-            except ValueError:
-                print("❌ Invalid amount")
-                continue
-            cart = checkout(cart, customer_name, total_price, user_discount, payment_received, payment_method, loyalty_points, daily_sales)
-            total_price = 0
-            user_discount = 0
-            draw_buttons(canvas, products, cart, total_price, user_discount, payment_method)
-        elif command == "exit":
-            print("👋 Exiting POS...")
-            moving_objects(canvas)
-            break
+    pos_system_option_panel(canvas, cart, products, loyalty_points, daily_sales, selected_payment_button, payment_method, customer_name, total_price, user_discount)
+
+
+# --- The Home Pages ---
+def welcome_home_page(canvas):
+    # creating the canvas' title line of text "POS Shopping Cart System" and screen saver.
+    canvas_title = canvas.create_text(220, 5, "POS Shopping Cart System", color="blue", font="Courier", font_size=10)
+    screen_saver = canvas.create_image(5, 15, "fruit_shop.png")
+
+
+def goodbye_home_page(canvas):
+    # creating the canvas' title line of text "POS Shopping Cart System" and screen saver.
+    canvas_title = canvas.create_text(220, 5, "POS Shopping Cart System", color="blue", font="Courier", font_size=10)
+    screen_saver = canvas.create_image(5, 15, "CodeInPlace.png")
 
 
 # --- Data Definitions ---
 def get_initial_products():
-
     # Generate random stock numbers
     num1 = random.randint(MIN_STOCK, MAX_STOCK)
     num2 = random.randint(MIN_STOCK, MAX_STOCK)
@@ -112,23 +107,23 @@ def get_initial_products():
     num8 = random.randint(MIN_STOCK, MAX_STOCK)
 
     return {
-        "Apple": {"price": 500, "image": "🍎", "stock": num1, "barcode": "001"},
-        "Banana": {"price": 800, "image": "🍌", "stock": num2, "barcode": "002"},
-        "Orange": {"price": 200, "image": "🍊", "stock": num3, "barcode": "003"},
-        "Lemon": {"price": 150, "image": "🍋", "stock": num4, "barcode": "004"},
-        "Mango": {"price": 200, "image": "🥭", "stock": num5, "barcode": "005"},
-        "Cucumber": {"price": 300, "image": "🥒", "stock": num6, "barcode": "006"},
-        "Carrot": {"price": 100, "image": "🥕", "stock": num7, "barcode": "007"},
-        "Avacado": {"price": 550, "image": "🥑", "stock": num8, "barcode": "008"}
+        "Apple": {"price": 500, "image": "🍎", "stock": num1, "barcode": "111"},
+        "Banana": {"price": 800, "image": "🍌", "stock": num2, "barcode": "222"},
+        "Orange": {"price": 200, "image": "🍊", "stock": num3, "barcode": "333"},
+        "Lemon": {"price": 150, "image": "🍋", "stock": num4, "barcode": "444"},
+        "Mango": {"price": 200, "image": "🥭", "stock": num5, "barcode": "555"},
+        "Cucumber": {"price": 300, "image": "🥒", "stock": num6, "barcode": "666"},
+        "Carrot": {"price": 100, "image": "🥕", "stock": num7, "barcode": "777"},
+        "Avacado": {"price": 550, "image": "🥑", "stock": num8, "barcode": "888"}
     }
 
 
 # --- Event Handling ---
 def on_mouse_click(canvas, x, y, state):
-    cart, products, loyalty_points, daily_sales, payment_method, customer_name, total_price, user_discount = state
+    cart, products, loyalty_points, daily_sales, selected_payment_button, payment_method, customer_name, total_price, user_discount = state
 
-    for rect, item in draw_buttons(canvas, products, cart, total_price, user_discount, payment_method):
-        if canvas.get_object_at(x, y) == rect:
+    for product_rect, item in draw_buttons(canvas, products, cart, total_price, user_discount, selected_payment_button, payment_method):
+        if canvas.get_object_at(x, y) == product_rect:
             if products[item]["stock"] > 0:
                 products[item]["stock"] -= 1
                 cart.append((item, products[item]["price"]))
@@ -140,11 +135,43 @@ def on_mouse_click(canvas, x, y, state):
                 print(f"⚠️ {item} is out of stock!")
             break
 
-    draw_buttons(canvas, products, cart, total_price, user_discount, payment_method)
+    draw_buttons(canvas, products, cart, total_price, user_discount, selected_payment_button, payment_method)
     return cart, total_price, user_discount
 
 
-# --- Command Handlers ---
+# --- Option Handlers ---
+def pos_system_option_panel(canvas, cart, products, loyalty_points, daily_sales, selected_payment_button, payment_method, customer_name, total_price, user_discount):
+    while True:
+        option = input("Option (barcode/restock/checkout/exit): ").strip().lower()
+        if option == "barcode":
+            # This creates the "Input a product barcode to add to cart" text instruction on the canvas
+            canvas.create_text(5, 30, "Input a barcode to add product to cart", color="red", font="Courier", font_size=11)
+            barcode = input("Enter barcode: ")
+            cart, total_price = simulate_barcode_scan(barcode, products, cart, total_price)
+            draw_buttons(canvas, products, cart, total_price, user_discount, selected_payment_button, payment_method)
+        elif option == "restock":
+            restock(products)
+            draw_buttons(canvas, products, cart, total_price, user_discount, selected_payment_button, payment_method)
+        elif option == "checkout":
+            draw_payment_selector(canvas, selected_payment_button, payment_method)
+            try:
+                payment_received = float(input("Enter amount paid: ₦"))
+            except ValueError:
+                print("❌ Invalid amount")
+                continue
+            cart = checkout(cart, customer_name, total_price, user_discount, payment_received, payment_method, loyalty_points, daily_sales)
+            total_price = 0
+            user_discount = 0
+            draw_buttons(canvas, products, cart, total_price, user_discount, selected_payment_button, payment_method)
+        elif option == "exit":
+            print("👋 Exiting POS...")
+            canvas.clear()
+            goodbye_home_page(canvas)
+            draw_goodbye_button(canvas)
+            draw_moving_ball(canvas)
+            break
+
+
 def simulate_barcode_scan(barcode, products, cart, total_price):
     for name, info in products.items():
         if info["barcode"] == barcode:
@@ -204,36 +231,69 @@ def checkout(cart, customer_name, total_price, user_discount, payment_received, 
 
 
 # --- GUI Drawing Functions ---
-def draw_buttons(canvas, products, cart, total_price, user_discount, payment_method):
-    canvas.clear()
-    # --error-- canvas.set_outline_color(color="lightgray")
-    canvas.create_text(80, 10, "Click a product or scan barcode to add to cart", color="red", font="Courier", font_size=15)
+def draw_welcome_button(canvas):
+    # draw the rectangles  
+    black_rect = canvas.create_rectangle(0, 310, RECT_SIZE, 330, 'black', 'red')
+    white_rect = canvas.create_rectangle(CANVAS_WIDTH, 310, CANVAS_WIDTH - RECT_SIZE, 330, 'white', 'red')
+    
+    # animation loop YOU ARE WELCOME
+    while canvas.get_left_x(black_rect) < (CANVAS_WIDTH / 2):
+        canvas.move(black_rect, 1, 0)
+        canvas.move(white_rect, -1, 0)
+   
+        # pause
+        time.sleep(DELAY)
+    canvas.create_text(252, 315, "YOU ARE", color="black", font="Courier", font_size=11)
+    canvas.create_text(303, 315, "WELCOME", color="white", font="Courier", font_size=11)
 
+
+def draw_enter_name_button(canvas):
+    canvas.create_rectangle(225, 330, 375, 350, "violet", "black")
+    canvas.create_text(232, 335, "ENTER COSTOMER NAME", color="blue", font="Courier", font_size=12)
+
+
+def draw_buttons(canvas, products, cart, total_price, user_discount, selected_payment_button, payment_method):
+    # This clears every object on the canvas
+    canvas.clear()
+
+    # Making the background color of my canvas lightgreen
+    canvas.create_rectangle(0, 0, CANVAS_WIDTH, CANVAS_HEIGHT, 'lightgreen')
+
+    click_here_button = canvas.create_rectangle(260, 45, 340, 65, "white", "black")    
+    canvas.create_text(265, 50, "CLICK HERE", color="black", font="Courier", font_size=12)
+    canvas.create_text(260, 70, "To Make A", color="red", font="Courier", font_size=13)
+    canvas.create_text(260, 85, "Choice", color="red", font="Courier", font_size=13)
+
+    # Creating the buttons for the products on the canvas
     product_buttons = []
     for i, (item, info) in enumerate(products.items()):
         x = START_X
         y = START_Y + i * GAP_Y
-        rect = canvas.create_rectangle(x, y, x + BUTTON_WIDTH, y + BUTTON_HEIGHT, "violet", "black")
-        # 
-        #canvas.create_rectangle(x, y, BUTTON_WIDTH, BUTTON_HEIGHT, "white", "black")
-        # 
+        product_rect = canvas.create_rectangle(x, y, x + BUTTON_WIDTH, y + BUTTON_HEIGHT, "violet", "black")
+        
         stock = info["stock"]
         canvas.create_text(x + 5, y + 5, f"{info['image']} {item} - ₦{info['price']} ({stock})", color="blue", font="Courier", font_size=14)
-        product_buttons.append((rect, item))
 
-    # 
+        barcode_button = canvas.create_rectangle(x - 45, y, x - 5, y + BUTTON_HEIGHT, "white", "black")
+        canvas.create_text(x - 40, y + 5, f"{info['barcode']}", color="black", font="Courier", font_size=14)
+
+        product_buttons.append((product_rect, item))
+
+    # Creating the text "Total: ₦", which is the total cost of the products on the canvas
     canvas.create_text(400, 70, f"Total: ₦{total_price:,.2f}", color="blue", font="Courier", font_size=18)
 
     draw_cart_panel(canvas, cart)
-    draw_payment_selector(canvas, payment_method)
+
     return product_buttons
 
 
 def draw_cart_panel(canvas, cart):
-    # 
+    # Creating the text "Cart 🛒:" on the canvas 
     canvas.create_text(400, CART_PANEL_START_Y - 20, "Cart 🛒:", color="blue", font="Courier", font_size=16)
+    
     y = CART_PANEL_START_Y
     cart_summary = {}
+    
     for item, price in cart:
         if item in cart_summary:
             cart_summary[item]["qty"] += 1
@@ -246,23 +306,42 @@ def draw_cart_panel(canvas, cart):
         y += 20
 
 
-def draw_payment_selector(canvas, payment_method):
-    # 
-    canvas.create_text(50, 280, "Payment Method:", color="brown", font="Courier", font_size=14)
+def draw_payment_selector(canvas, selected_payment_button, payment_method):
+    selected_payment_button.clear()
+
+    # Creating the text "Payment Method:" on the canvas
+    canvas.create_text(50, 280, "Payment Method:", color="red", font="Courier", font_size=14)
+    
     for i, method in enumerate(PAYMENT_OPTIONS):
         x = 50 + i * 110
         y = 300
-        canvas.create_rectangle(x, y, x + 85, y + 20, "violet", "black")
-        # 
-        #canvas.create_rectangle(x, y, 100, 30, "white", "black")
-        # 
+        button = canvas.create_rectangle(x, y, x + 85, y + 20, "violet", "black")
+        
         canvas.create_text(x + 5, y + 5, method, color="blue", font="Courier", font_size=12)
+    
         if method == payment_method:
-            # 
+        
             canvas.create_text(x + 70, y + 5, "✓", color="red", font="Courier", font_size=14)
+    selected_payment_button.append((button, payment_method))
 
 
-def moving_objects(canvas):
+def draw_goodbye_button(canvas):
+    # draw the rectangles  
+    black_rect = canvas.create_rectangle(0, 330, RECT_SIZE, 350, 'black', 'blue')
+    white_rect = canvas.create_rectangle(CANVAS_WIDTH, 330, CANVAS_WIDTH - RECT_SIZE, 350, 'white', 'blue')
+    
+    # animation loop YOU ARE WELCOME
+    while canvas.get_left_x(black_rect) < (CANVAS_WIDTH / 2):
+        canvas.move(black_rect, 1, 0)
+        canvas.move(white_rect, -1, 0)
+   
+        # pause
+        time.sleep(DELAY)
+    canvas.create_text(260, 335, "GOOD", color="black", font="Courier", font_size=11)
+    canvas.create_text(315, 335, "BYE", color="white", font="Courier", font_size=11)
+
+
+def draw_moving_ball(canvas):
     # creating brown_ball and my_image; and storing them in variables
     brown_ball = canvas.create_oval(0, 370, BALL_SIZE, BALL_SIZE + 370, 'brown')
     # --ToDo-- my_image = canvas.create_image(x, y, 'image')
