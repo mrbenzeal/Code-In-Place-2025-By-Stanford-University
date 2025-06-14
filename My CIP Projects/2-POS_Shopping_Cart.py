@@ -297,7 +297,7 @@ def display_receipt_on_canvas(canvas, filename):
             break  # avoid drawing off-screen
 
 
-# --- GUI Drawing Functions --- #
+# --- Graphical User Interface Drawing Functions --- #
 def draw_welcome_button(canvas):
     # draw the rectangles  
     black_rect = canvas.create_rectangle(0, 310, RECT_SIZE, 330, 'black', 'red')
