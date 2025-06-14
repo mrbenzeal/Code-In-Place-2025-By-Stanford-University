@@ -136,15 +136,16 @@ def pos_system_option_panel(canvas, cart, products, loyalty_points, daily_sales,
     while True:
         option = input("Option (barcode/restock/checkout/view/exit): ").strip().lower()
         if option == "barcode":
-            # This creates the "Input a product barcode to add to cart" text instruction on the canvas
-            canvas.create_text(5, 30, "Input a barcode to add product to cart", color="red", font="Courier", font_size=11)
+            draw_buttons(canvas, products, cart, total_price, user_discount, selected_payment_button, payment_method)
             barcode = input("Enter barcode: ")
             cart, total_price = simulate_barcode_scan(barcode, products, cart, total_price)
             draw_buttons(canvas, products, cart, total_price, user_discount, selected_payment_button, payment_method)
         elif option == "restock":
+            draw_buttons(canvas, products, cart, total_price, user_discount, selected_payment_button, payment_method)
             restock(products)
             draw_buttons(canvas, products, cart, total_price, user_discount, selected_payment_button, payment_method)
         elif option == "checkout":
+            draw_buttons(canvas, products, cart, total_price, user_discount, selected_payment_button, payment_method)
             draw_payment_selector_buttons(canvas, selected_payment_button, payment_method)
             canvas.wait_for_click()
             try:
@@ -157,14 +158,28 @@ def pos_system_option_panel(canvas, cart, products, loyalty_points, daily_sales,
             user_discount = 0
             draw_buttons(canvas, products, cart, total_price, user_discount, selected_payment_button, payment_method)
         elif option == "view":
-            # display_latest_receipt(canvas)
+            # Display the latest receipt
+            display_latest_receipt(canvas)
+            # List all available receipts
             receipts = list_receipts(canvas)
             if not receipts:
                 print("❌ No receipts available.")
+                canvas.create_text(200, 200, "❌ No receipts available.", color="red", font="Courier", font_size=18)
                 continue
+            # Display receipt list in terminal
             print("\nAvailable Receipts:")
             for idx, r in enumerate(receipts):
                 print(f"{idx + 1}. {r}")
+            """
+            # Display receipt list on canvas
+            canvas.create_text(20, 40, "📁 Receipt List:", color="black", font="Courier", font_size=14)
+            y = 60
+            for idx, r in enumerate(receipts[:10]):  # Show up to 10
+                canvas.create_text(20, y, f"{idx + 1}. {r}", color="black", font="Courier", font_size=12)
+                y += 15
+            """
+            # Prompt for receipt to view
+            y = 60
             try:
                 choice = int(input("Select receipt number to view: "))
                 if 1 <= choice <= len(receipts):
@@ -172,8 +187,10 @@ def pos_system_option_panel(canvas, cart, products, loyalty_points, daily_sales,
                     display_receipt_on_canvas(canvas, selected_receipt)
                 else:
                     print("❌ Invalid selection.")
+                    canvas.create_text(200, y + 20, "❌ Invalid selection.", color="red", font="Courier", font_size=18)
             except ValueError:
                 print("❌ Invalid input.")
+                canvas.create_text(200, y + 20, "❌ Invalid input.", color="red", font="Courier", font_size=18)
         elif option == "exit":
             print("👋 Exiting POS...")
             canvas.clear()
