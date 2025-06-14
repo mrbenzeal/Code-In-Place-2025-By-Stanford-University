@@ -7,8 +7,8 @@ This is a Nigerian Fruit Shop's Point-of-Sale (POS) Shopping Cart System.
 - It is a solo-friendly, interactive Python project using Python graphics canvas, time, os and random imports. 
 - It simulates a real-world retail checkout experience with product selection 
   via barcode input, a dynamic cart display, stock management, and tax. 
-- User can clear carts, see visual updates, and receive real-time total cost calculations. 
-- Receipts can be viewed or exported with customer's name, timestamps, and loyalty points. 
+- Users can clear carts, see visual updates, and receive real-time total cost calculations. 
+- Receipts can be viewed or exported with the customer's name, timestamps, and loyalty points. 
 - Admin functions also include restocking.
 
 NOTE:
@@ -86,7 +86,7 @@ def main():
 
     # the POS interactive page
     draw_buttons(canvas, products, cart, total_price, user_discount, selected_payment_button, payment_method)
-    draw_click_here(canvas)
+    draw_click_here_button(canvas)
     canvas.wait_for_click()
     pos_system_option_panel(canvas, cart, products, loyalty_points, daily_sales, selected_payment_button, payment_method, customer_name, total_price, user_discount)
 
@@ -97,13 +97,13 @@ def main():
 def welcome_home_page(canvas):
     # Creating the canvas title line of text "POS Shopping Cart System" and screen saver.
     canvas_title = canvas.create_text(220, 5, "POS Shopping Cart System", color="blue", font="Courier", font_size=10)
-    screen_saver = canvas.create_image(5, 15, "fruit_shop.png")
+    # screen_saver = canvas.create_image(5, 15, "fruit_shop.png")
 
 
 def goodbye_home_page(canvas):
     # Creating the canvas title line of text "POS Shopping Cart System" and screen saver.
     canvas_title = canvas.create_text(220, 5, "POS Shopping Cart System", color="blue", font="Courier", font_size=10)
-    screen_saver = canvas.create_image(5, 15, "CodeInPlace.png")
+    # screen_saver = canvas.create_image(5, 15, "CodeInPlace.png")
 
 
 # --- Data Definitions --- #
@@ -145,7 +145,7 @@ def pos_system_option_panel(canvas, cart, products, loyalty_points, daily_sales,
             restock(products)
             draw_buttons(canvas, products, cart, total_price, user_discount, selected_payment_button, payment_method)
         elif option == "checkout":
-            draw_payment_selector(canvas, selected_payment_button, payment_method)
+            draw_payment_selector_buttons(canvas, selected_payment_button, payment_method)
             canvas.wait_for_click()
             try:
                 payment_received = float(input("Enter amount paid: ₦"))
@@ -157,7 +157,23 @@ def pos_system_option_panel(canvas, cart, products, loyalty_points, daily_sales,
             user_discount = 0
             draw_buttons(canvas, products, cart, total_price, user_discount, selected_payment_button, payment_method)
         elif option == "view":
-            display_latest_receipt()
+            # display_latest_receipt(canvas)
+            receipts = list_receipts(canvas)
+            if not receipts:
+                print("❌ No receipts available.")
+                continue
+            print("\nAvailable Receipts:")
+            for idx, r in enumerate(receipts):
+                print(f"{idx + 1}. {r}")
+            try:
+                choice = int(input("Select receipt number to view: "))
+                if 1 <= choice <= len(receipts):
+                    selected_receipt = receipts[choice - 1]
+                    display_receipt_on_canvas(canvas, selected_receipt)
+                else:
+                    print("❌ Invalid selection.")
+            except ValueError:
+                print("❌ Invalid input.")
         elif option == "exit":
             print("👋 Exiting POS...")
             canvas.clear()
@@ -205,7 +221,7 @@ def checkout(cart, customer_name, total_price, user_discount, payment_received, 
         f.write(f"Time: {time.strftime('%Y-%m-%d %H:%M:%S')}\n")
         f.write("--- Items ---\n")
         for item, price in cart:
-            f.write(f"{item}: ₦{price:,.2f}\n")
+            f.write(f"{item}: ₦{price:,.2f}\n") # 
         f.write(f"Subtotal: ₦{total_price:,.2f}\n")
         f.write(f"Tax: ₦{tax:,.2f}\n")
         if user_discount:
@@ -226,7 +242,7 @@ def checkout(cart, customer_name, total_price, user_discount, payment_received, 
     return []
 
 
-def display_latest_receipt():
+def display_latest_receipt(canvas):
     receipts = [f for f in os.listdir() if f.startswith("receipt_") and f.endswith(".txt")]
     if not receipts:
         print("❌ No receipts found.")
@@ -235,6 +251,35 @@ def display_latest_receipt():
     print(f"\n📄 Displaying latest receipt: {latest}\n" + "-"*29)
     with open(latest, "r") as f:
         print(f.read())
+
+
+def list_receipts(canvas):
+    receipts = [f for f in os.listdir() if f.startswith("receipt_") and f.endswith(".txt")]
+    receipts.sort(reverse=True, key=os.path.getctime)
+    return receipts
+
+
+def display_receipt_on_canvas(canvas, filename):
+    canvas.clear()
+    canvas.create_rectangle(0, 0, CANVAS_WIDTH, CANVAS_HEIGHT, "white")
+    canvas.create_text(20, 20, f"📄 Viewing: {filename}", color="black", font="Courier", font_size=16)
+    
+    try:
+        with open(filename, "r") as f:
+            lines = f.readlines()
+    except FileNotFoundError:
+        canvas.create_text(200, 100, "❌ Receipt file not found.", color="red", font="Courier", font_size=18)
+        return
+
+    y = 40
+    print(f"\n📄 Displaying receipt: {filename}\n" + "-"*22)
+    for line in lines:
+        print(line.strip())
+        if y < CANVAS_HEIGHT - 15:
+            canvas.create_text(20, y, line.strip(), color="black", font="Courier", font_size=12)
+            y += 15
+        else:
+            break  # avoid drawing off-screen
 
 
 # --- GUI Drawing Functions --- #
@@ -259,7 +304,7 @@ def draw_enter_name_button(canvas):
     canvas.create_text(232, 335, "ENTER COSTOMER NAME", color="blue", font="Courier", font_size=12)
 
 
-def draw_click_here(canvas):
+def draw_click_here_button(canvas):
     click_here_button = canvas.create_rectangle(260, 45, 340, 65, "white", "black")    
     canvas.create_text(265, 50, "CLICK HERE", color="black", font="Courier", font_size=12)
     canvas.create_text(260, 70, "To Make A", color="red", font="Courier", font_size=13)
@@ -315,7 +360,7 @@ def draw_cart_panel(canvas, cart):
         y += 20
 
 
-def draw_payment_selector(canvas, selected_payment_button, payment_method):
+def draw_payment_selector_buttons(canvas, selected_payment_button, payment_method):
     selected_payment_button.clear()
 
     # Creating the text "Payment Method:" on the canvas
