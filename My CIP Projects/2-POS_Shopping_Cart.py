@@ -188,7 +188,7 @@ def pos_system_option_panel(canvas, cart, products, loyalty_points, daily_sales,
         elif option == "exit":
             print("👋 Exiting POS...")
             canvas.clear()
-            The goodbye home page design
+            # goodbye home page design
             goodbye_home_page(canvas)
             draw_goodbye_button(canvas)
             draw_moving_ball(canvas)
