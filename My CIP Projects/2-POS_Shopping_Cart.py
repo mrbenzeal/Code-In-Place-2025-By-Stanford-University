@@ -23,8 +23,8 @@ VOTE OF THANKS:
 ---------------
 I wish to thank:
 - My Section Leader: Anna Q
-- My CIP Section Members
-- Chris Piech & Mehran Sahami
+- My 2025 Code In Place Section Members
+- Professor Chris Piech & Mehran Sahami
 - Stanford University's Code in Place 2025 staff
 For making my Python learning journey pleasurable.
 """
@@ -98,13 +98,13 @@ def main():
 def welcome_home_page(canvas):
     # Creating the canvas title line of text "POS Shopping Cart System" and screen saver.
     canvas_title = canvas.create_text(220, 5, "POS Shopping Cart System", color="blue", font="Courier", font_size=10)
-    # screen_saver = canvas.create_image(5, 15, "fruit_shop.png")
+    screen_saver = canvas.create_image(5, 15, "fruit_shop.png")
 
 
 def goodbye_home_page(canvas):
     # Creating the canvas title line of text "POS Shopping Cart System" and screen saver.
     canvas_title = canvas.create_text(220, 5, "POS Shopping Cart System", color="blue", font="Courier", font_size=10)
-    # screen_saver = canvas.create_image(5, 15, "CodeInPlace.png")
+    screen_saver = canvas.create_image(5, 15, "CodeInPlace.png")
 
 
 # --- Data Definitions --- #
