@@ -137,13 +137,35 @@ def pos_system_option_panel(canvas, cart, products, loyalty_points, daily_sales,
             refresh_user_interface(canvas, products, cart, total_price, user_discount, selected_payment_button, payment_method)
             barcode = input("Enter barcode: ")
             cart, total_price = simulate_barcode_scan(barcode, products, cart, total_price)
+            found = False
+            for product, info in products.items():
+                if info["barcode"] == barcode:
+                    if info["stock"] > 0:
+                        cart.append(product)
+                        total_price += info["price"]
+                        info["stock"] -= 1
+                        if random.random() < DISCOUNT_CHANCE:
+                            user_discount += 20
+                        found = True
+                        print(f"✅ {product} added to cart.")
+                    else:
+                        print("❌ Product out of stock.")
+                    break
+            if not found:
+                print("❌ Invalid barcode.")
             draw_buttons(canvas, products, cart, total_price, user_discount, selected_payment_button, payment_method)
+
         elif option == "restock":
             refresh_user_interface(canvas, products, cart, total_price, user_discount, selected_payment_button, payment_method)
             restock(products)
+            print("✅ Products restocked.")
             draw_buttons(canvas, products, cart, total_price, user_discount, selected_payment_button, payment_method)
+
         elif option == "checkout":
             refresh_user_interface(canvas, products, cart, total_price, user_discount, selected_payment_button, payment_method)
+            if not cart:
+                print("❌ Cart is empty. Add items before checkout.")
+                continue
             draw_payment_selector_buttons(canvas, selected_payment_button, payment_method)
             canvas.wait_for_click()
             try:
@@ -151,10 +173,13 @@ def pos_system_option_panel(canvas, cart, products, loyalty_points, daily_sales,
             except ValueError:
                 print("❌ Invalid amount")
                 continue
+            receipt_name = datetime.now().strftime("receipt_%Y%m%d_%H%M%S.txt")
             cart = checkout(cart, customer_name, total_price, user_discount, payment_received, payment_method, loyalty_points, daily_sales)
             total_price = 0
             user_discount = 0
+            print(f"✅ Payment successful. Receipt saved as {receipt_name}.")
             draw_buttons(canvas, products, cart, total_price, user_discount, selected_payment_button, payment_method)
+
         elif option == "view":
             # Display the latest receipt on the terminal
             display_latest_receipt(canvas)
@@ -187,7 +212,6 @@ def pos_system_option_panel(canvas, cart, products, loyalty_points, daily_sales,
         elif option == "exit":
             print("👋 Exiting POS...")
             canvas.clear()
-            # The goodbye home page design
             goodbye_home_page(canvas)
             draw_goodbye_button(canvas)
             draw_moving_ball(canvas)
@@ -292,7 +316,7 @@ def display_receipt_on_canvas(canvas, filename):
             break  # avoid drawing off-screen
 
 
-# --- GUI Drawing Functions --- #
+# --- Graphical User Interface Drawing Functions --- #
 def draw_welcome_button(canvas):
     # draw the rectangles  
     black_rect = canvas.create_rectangle(0, 310, RECT_SIZE, 330, 'black', 'red')
