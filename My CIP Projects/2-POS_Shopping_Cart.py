@@ -138,11 +138,13 @@ def pos_system_option_panel(canvas, cart, products, loyalty_points, daily_sales,
             barcode = input("Enter barcode: ")
             cart, total_price = simulate_barcode_scan(barcode, products, cart, total_price)
             draw_buttons(canvas, products, cart, total_price, user_discount, selected_payment_button, payment_method)
+          
         elif option == "restock":
             refresh_user_interface(canvas, products, cart, total_price, user_discount, selected_payment_button, payment_method)
             restock(products)
             print("✅ Products restocked.")
             draw_buttons(canvas, products, cart, total_price, user_discount, selected_payment_button, payment_method)
+          
         elif option == "checkout":
             refresh_user_interface(canvas, products, cart, total_price, user_discount, selected_payment_button, payment_method)
             draw_payment_selector_buttons(canvas, selected_payment_button, payment_method)
@@ -156,6 +158,7 @@ def pos_system_option_panel(canvas, cart, products, loyalty_points, daily_sales,
             total_price = 0
             user_discount = 0
             draw_buttons(canvas, products, cart, total_price, user_discount, selected_payment_button, payment_method)
+          
         elif option == "view":
             # Display the latest receipt on the terminal
             display_latest_receipt(canvas)
@@ -185,6 +188,7 @@ def pos_system_option_panel(canvas, cart, products, loyalty_points, daily_sales,
                 # Display "❌ Invalid input." on the terminal & canvas
                 print("❌ Invalid input.")
                 canvas.create_text(200, y + 20, "❌ Invalid input.", color="red", font="Courier", font_size=18)
+              
         elif option == "exit":
             print("👋 Exiting POS...")
             canvas.clear()
