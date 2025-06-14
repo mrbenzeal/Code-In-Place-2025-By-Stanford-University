@@ -8,7 +8,7 @@ This is a Nigerian Fruit Shop's Point-of-Sale (POS) Shopping Cart System.
 - It simulates a real-world retail checkout experience with product selection 
   via barcode input, a dynamic cart display, stock management, and tax. 
 - Users can clear carts, see visual updates, and receive real-time total cost calculations. 
-- Receipts can be viewed or exported with the customer's name, timestamps, and loyalty points. 
+- Receipts can be exported, saved, and viewed on the terminal and canvas using the customer's name, timestamps, and loyalty points. 
 - Admin functions also include restocking.
 
 NOTE:
@@ -33,6 +33,7 @@ from graphics import Canvas
 import random
 import os
 import time
+from datetime import datetime
 
 # --- Canvas Constants --- #
 CANVAS_WIDTH = 600
@@ -109,25 +110,22 @@ def goodbye_home_page(canvas):
 # --- Data Definitions --- #
 def get_initial_products():
     # Generate random stock numbers
-    num1 = random.randint(MIN_STOCK, MAX_STOCK)
-    num2 = random.randint(MIN_STOCK, MAX_STOCK)
-    num3 = random.randint(MIN_STOCK, MAX_STOCK)
-    num4 = random.randint(MIN_STOCK, MAX_STOCK)
-    num5 = random.randint(MIN_STOCK, MAX_STOCK)
-    num6 = random.randint(MIN_STOCK, MAX_STOCK)
-    num7 = random.randint(MIN_STOCK, MAX_STOCK)
-    num8 = random.randint(MIN_STOCK, MAX_STOCK)
-
+    nums = [random.randint(MIN_STOCK, MAX_STOCK) for num in range(8)]
     return {
-        "Apple": {"price": 500, "image": "🍎", "stock": num1, "barcode": "111"},
-        "Banana": {"price": 800, "image": "🍌", "stock": num2, "barcode": "222"},
-        "Orange": {"price": 200, "image": "🍊", "stock": num3, "barcode": "333"},
-        "Lemon": {"price": 150, "image": "🍋", "stock": num4, "barcode": "444"},
-        "Mango": {"price": 200, "image": "🥭", "stock": num5, "barcode": "555"},
-        "Cucumber": {"price": 300, "image": "🥒", "stock": num6, "barcode": "666"},
-        "Carrot": {"price": 100, "image": "🥕", "stock": num7, "barcode": "777"},
-        "Avacado": {"price": 550, "image": "🥑", "stock": num8, "barcode": "888"}
+        "Apple": {"price": 500, "image": "🍎", "stock": nums[0], "barcode": "111"},
+        "Banana": {"price": 800, "image": "🍌", "stock": nums[1], "barcode": "222"},
+        "Orange": {"price": 200, "image": "🍊", "stock": nums[2], "barcode": "333"},
+        "Lemon": {"price": 150, "image": "🍋", "stock": nums[3], "barcode": "444"},
+        "Mango": {"price": 200, "image": "🥭", "stock": nums[4], "barcode": "555"},
+        "Cucumber": {"price": 300, "image": "🥒", "stock": nums[5], "barcode": "666"},
+        "Carrot": {"price": 100, "image": "🥕", "stock": nums[6], "barcode": "777"},
+        "Avacado": {"price": 550, "image": "🥑", "stock": nums[7], "barcode": "888"}
     }
+
+
+# --- User Interface Refresh Helper --- #
+def refresh_user_interface(canvas, products, cart, total_price, user_discount, selected_payment_button, payment_method):
+    draw_buttons(canvas, products, cart, total_price, user_discount, selected_payment_button, payment_method)
 
 
 # --- Option Handlers --- #
@@ -136,16 +134,16 @@ def pos_system_option_panel(canvas, cart, products, loyalty_points, daily_sales,
     while True:
         option = input("Option (barcode/restock/checkout/view/exit): ").strip().lower()
         if option == "barcode":
-            draw_buttons(canvas, products, cart, total_price, user_discount, selected_payment_button, payment_method)
+            refresh_user_interface(canvas, products, cart, total_price, user_discount, selected_payment_button, payment_method)
             barcode = input("Enter barcode: ")
             cart, total_price = simulate_barcode_scan(barcode, products, cart, total_price)
             draw_buttons(canvas, products, cart, total_price, user_discount, selected_payment_button, payment_method)
         elif option == "restock":
-            draw_buttons(canvas, products, cart, total_price, user_discount, selected_payment_button, payment_method)
+            refresh_user_interface(canvas, products, cart, total_price, user_discount, selected_payment_button, payment_method)
             restock(products)
             draw_buttons(canvas, products, cart, total_price, user_discount, selected_payment_button, payment_method)
         elif option == "checkout":
-            draw_buttons(canvas, products, cart, total_price, user_discount, selected_payment_button, payment_method)
+            refresh_user_interface(canvas, products, cart, total_price, user_discount, selected_payment_button, payment_method)
             draw_payment_selector_buttons(canvas, selected_payment_button, payment_method)
             canvas.wait_for_click()
             try:
@@ -158,27 +156,20 @@ def pos_system_option_panel(canvas, cart, products, loyalty_points, daily_sales,
             user_discount = 0
             draw_buttons(canvas, products, cart, total_price, user_discount, selected_payment_button, payment_method)
         elif option == "view":
-            # Display the latest receipt
+            # Display the latest receipt on the terminal
             display_latest_receipt(canvas)
             # List all available receipts
             receipts = list_receipts(canvas)
             if not receipts:
+                # Display "❌ No receipts available." on the terminal & canvas
                 print("❌ No receipts available.")
                 canvas.create_text(200, 200, "❌ No receipts available.", color="red", font="Courier", font_size=18)
                 continue
-            # Display receipt list in terminal
+            # Display all available receipts list on the terminal
             print("\nAvailable Receipts:")
             for idx, r in enumerate(receipts):
                 print(f"{idx + 1}. {r}")
-            """
-            # Display receipt list on canvas
-            canvas.create_text(20, 40, "📁 Receipt List:", color="black", font="Courier", font_size=14)
-            y = 60
-            for idx, r in enumerate(receipts[:10]):  # Show up to 10
-                canvas.create_text(20, y, f"{idx + 1}. {r}", color="black", font="Courier", font_size=12)
-                y += 15
-            """
-            # Prompt for receipt to view
+            # Prompt for receipt to view, choose & display on canvas
             y = 60
             try:
                 choice = int(input("Select receipt number to view: "))
@@ -186,9 +177,11 @@ def pos_system_option_panel(canvas, cart, products, loyalty_points, daily_sales,
                     selected_receipt = receipts[choice - 1]
                     display_receipt_on_canvas(canvas, selected_receipt)
                 else:
+                    # Display "❌ Invalid selection." on the terminal & canvas
                     print("❌ Invalid selection.")
                     canvas.create_text(200, y + 20, "❌ Invalid selection.", color="red", font="Courier", font_size=18)
             except ValueError:
+                # Display "❌ Invalid input." on the terminal & canvas
                 print("❌ Invalid input.")
                 canvas.create_text(200, y + 20, "❌ Invalid input.", color="red", font="Courier", font_size=18)
         elif option == "exit":
@@ -324,8 +317,7 @@ def draw_enter_name_button(canvas):
 def draw_click_here_button(canvas):
     click_here_button = canvas.create_rectangle(260, 45, 340, 65, "white", "black")    
     canvas.create_text(265, 50, "CLICK HERE", color="black", font="Courier", font_size=12)
-    canvas.create_text(260, 70, "To Make A", color="red", font="Courier", font_size=13)
-    canvas.create_text(260, 85, "Choice", color="red", font="Courier", font_size=13)
+    canvas.create_text(260, 70, "For Options", color="red", font="Courier", font_size=12)
 
 
 def draw_buttons(canvas, products, cart, total_price, user_discount, selected_payment_button, payment_method):
@@ -334,6 +326,9 @@ def draw_buttons(canvas, products, cart, total_price, user_discount, selected_pa
 
     # Making the background colour of my canvas light-green
     canvas.create_rectangle(0, 0, CANVAS_WIDTH, CANVAS_HEIGHT, 'lightgreen')
+
+    # This creates the "Input a product barcode to add to cart" text instruction on the canvas
+    canvas.create_text(5, 30, "Input a barcode to add product to cart", color="red", font="Courier", font_size=11)
 
     # Creating the buttons for the products on the canvas
     product_buttons = []
@@ -345,6 +340,7 @@ def draw_buttons(canvas, products, cart, total_price, user_discount, selected_pa
         stock = info["stock"]
         canvas.create_text(x + 5, y + 5, f"{info['image']} {item} - ₦{info['price']} ({stock})", color="blue", font="Courier", font_size=14)
 
+        # Creating the buttons for the barcodes on the canvas
         barcode_button = canvas.create_rectangle(x - 45, y, x - 5, y + BUTTON_HEIGHT, "white", "black")
         canvas.create_text(x - 40, y + 5, f"{info['barcode']}", color="black", font="Courier", font_size=14)
 
