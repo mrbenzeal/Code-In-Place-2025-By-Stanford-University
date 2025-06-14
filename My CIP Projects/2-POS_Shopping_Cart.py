@@ -98,13 +98,13 @@ def main():
 def welcome_home_page(canvas):
     # Creating the canvas title line of text "POS Shopping Cart System" and screen saver.
     canvas_title = canvas.create_text(220, 5, "POS Shopping Cart System", color="blue", font="Courier", font_size=10)
-    screen_saver = canvas.create_image(5, 15, "fruit_shop.png")
+    #screen_saver = canvas.create_image(5, 15, "fruit_shop.png")
 
 
 def goodbye_home_page(canvas):
     # Creating the canvas title line of text "POS Shopping Cart System" and screen saver.
     canvas_title = canvas.create_text(220, 5, "POS Shopping Cart System", color="blue", font="Courier", font_size=10)
-    screen_saver = canvas.create_image(5, 15, "CodeInPlace.png")
+    #screen_saver = canvas.create_image(5, 15, "CodeInPlace.png")
 
 
 # --- Data Definitions --- #
@@ -141,6 +141,7 @@ def pos_system_option_panel(canvas, cart, products, loyalty_points, daily_sales,
         elif option == "restock":
             refresh_user_interface(canvas, products, cart, total_price, user_discount, selected_payment_button, payment_method)
             restock(products)
+            print("✅ Products restocked.")
             draw_buttons(canvas, products, cart, total_price, user_discount, selected_payment_button, payment_method)
         elif option == "checkout":
             refresh_user_interface(canvas, products, cart, total_price, user_discount, selected_payment_button, payment_method)
@@ -187,7 +188,7 @@ def pos_system_option_panel(canvas, cart, products, loyalty_points, daily_sales,
         elif option == "exit":
             print("👋 Exiting POS...")
             canvas.clear()
-            # The goodbye home page design
+            The goodbye home page design
             goodbye_home_page(canvas)
             draw_goodbye_button(canvas)
             draw_moving_ball(canvas)
