@@ -11,10 +11,11 @@ This is a Nigerian Fruit Shop's Point-of-Sale (POS) Shopping Cart System.
 - Receipts can be exported, saved, and viewed on the terminal and canvas using the customer's name, timestamps, and loyalty points. 
 - Admin functions also include restocking.
 
-NOTE:
------
+I Duly Acknowledge:
+-------------------
 This project is subject to more improved functionalities like:
 - Click buttons effectively for objects on the canvas.
+- More work on the view receipt option.
 - Improved graphical animations.
 - A better-decomposited program.
 - And more.
@@ -33,7 +34,6 @@ from graphics import Canvas
 import random
 import os
 import time
-from datetime import datetime
 
 # --- Canvas Constants --- #
 CANVAS_WIDTH = 600
@@ -75,7 +75,7 @@ def main():
     draw_enter_name_button(canvas) 
 
     # Initializing the canvas' local variables
-    products = get_initial_products()
+    products = get_initial_products(canvas)
     cart = []
     loyalty_points = {}
     daily_sales = []
@@ -98,17 +98,17 @@ def main():
 def welcome_home_page(canvas):
     # Creating the canvas title line of text "POS Shopping Cart System" and screen saver.
     canvas_title = canvas.create_text(220, 5, "POS Shopping Cart System", color="blue", font="Courier", font_size=10)
-    #screen_saver = canvas.create_image(5, 15, "fruit_shop.png")
+    screen_saver = canvas.create_image(5, 15, "fruit_shop.png")
 
 
 def goodbye_home_page(canvas):
     # Creating the canvas title line of text "POS Shopping Cart System" and screen saver.
     canvas_title = canvas.create_text(220, 5, "POS Shopping Cart System", color="blue", font="Courier", font_size=10)
-    #screen_saver = canvas.create_image(5, 15, "CodeInPlace.png")
+    screen_saver = canvas.create_image(5, 15, "CodeInPlace.png")
 
 
 # --- Data Definitions --- #
-def get_initial_products():
+def get_initial_products(canvas):
     # Generate random stock numbers
     nums = [random.randint(MIN_STOCK, MAX_STOCK) for num in range(8)]
     return {
@@ -138,13 +138,13 @@ def pos_system_option_panel(canvas, cart, products, loyalty_points, daily_sales,
             barcode = input("Enter barcode: ")
             cart, total_price = simulate_barcode_scan(barcode, products, cart, total_price)
             draw_buttons(canvas, products, cart, total_price, user_discount, selected_payment_button, payment_method)
-          
+
         elif option == "restock":
             refresh_user_interface(canvas, products, cart, total_price, user_discount, selected_payment_button, payment_method)
             restock(products)
             print("✅ Products restocked.")
             draw_buttons(canvas, products, cart, total_price, user_discount, selected_payment_button, payment_method)
-          
+
         elif option == "checkout":
             refresh_user_interface(canvas, products, cart, total_price, user_discount, selected_payment_button, payment_method)
             draw_payment_selector_buttons(canvas, selected_payment_button, payment_method)
@@ -152,29 +152,26 @@ def pos_system_option_panel(canvas, cart, products, loyalty_points, daily_sales,
             try:
                 payment_received = float(input("Enter amount paid: ₦"))
             except ValueError:
+                # Display "❌ Invalid amount." on the terminal & canvas
                 print("❌ Invalid amount")
+                canvas.clear()
+                canvas.create_text(200, 200, "❌ Invalid amount.", color="red", font="Courier", font_size=18)
                 continue
             cart = checkout(cart, customer_name, total_price, user_discount, payment_received, payment_method, loyalty_points, daily_sales)
             total_price = 0
             user_discount = 0
             draw_buttons(canvas, products, cart, total_price, user_discount, selected_payment_button, payment_method)
-          
+
         elif option == "view":
             # Display the latest receipt on the terminal
             display_latest_receipt(canvas)
             # List all available receipts
             receipts = list_receipts(canvas)
-            if not receipts:
-                # Display "❌ No receipts available." on the terminal & canvas
-                print("❌ No receipts available.")
-                canvas.create_text(200, 200, "❌ No receipts available.", color="red", font="Courier", font_size=18)
-                continue
             # Display all available receipts list on the terminal
             print("\nAvailable Receipts:")
             for idx, r in enumerate(receipts):
                 print(f"{idx + 1}. {r}")
             # Prompt for receipt to view, choose & display on canvas
-            y = 60
             try:
                 choice = int(input("Select receipt number to view: "))
                 if 1 <= choice <= len(receipts):
@@ -183,12 +180,14 @@ def pos_system_option_panel(canvas, cart, products, loyalty_points, daily_sales,
                 else:
                     # Display "❌ Invalid selection." on the terminal & canvas
                     print("❌ Invalid selection.")
-                    canvas.create_text(200, y + 20, "❌ Invalid selection.", color="red", font="Courier", font_size=18)
+                    canvas.clear()
+                    canvas.create_text(200, 200, "❌ Invalid selection.", color="red", font="Courier", font_size=18)
             except ValueError:
                 # Display "❌ Invalid input." on the terminal & canvas
                 print("❌ Invalid input.")
-                canvas.create_text(200, y + 20, "❌ Invalid input.", color="red", font="Courier", font_size=18)
-              
+                canvas.clear()
+                canvas.create_text(200, 200, "❌ Invalid input.", color="red", font="Courier", font_size=18)
+
         elif option == "exit":
             print("👋 Exiting POS...")
             canvas.clear()
@@ -260,7 +259,10 @@ def checkout(cart, customer_name, total_price, user_discount, payment_received, 
 def display_latest_receipt(canvas):
     receipts = [f for f in os.listdir() if f.startswith("receipt_") and f.endswith(".txt")]
     if not receipts:
-        print("❌ No receipts found.")
+        # Display "❌ No latest receipt found." on the terminal & canvas
+        print("❌ No latest receipt found.")
+        canvas.clear()
+        canvas.create_text(150, 200, "❌ No latest receipt found.", color="red", font="Courier", font_size=18)
         return
     latest = max(receipts, key=os.path.getctime)
     print(f"\n📄 Displaying latest receipt: {latest}\n" + "-"*29)
@@ -283,7 +285,7 @@ def display_receipt_on_canvas(canvas, filename):
         with open(filename, "r") as f:
             lines = f.readlines()
     except FileNotFoundError:
-        canvas.create_text(200, 100, "❌ Receipt file not found.", color="red", font="Courier", font_size=18)
+        canvas.create_text(150, 200, "❌ Receipt file not found.", color="red", font="Courier", font_size=18)
         return
 
     y = 40
