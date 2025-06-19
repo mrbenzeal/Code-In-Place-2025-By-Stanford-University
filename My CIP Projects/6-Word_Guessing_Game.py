@@ -1,6 +1,6 @@
 """
-File: word_guess.py
--------------------
+File: Word_Guessing_Game.py
+----------------------------
 Fill in this comment.
 """
 
@@ -12,11 +12,32 @@ LEXICON_FILE = "Lexicon.txt"    # File to read word list from
 INITIAL_GUESSES = 8             # Max number of guesses per game
 
 
+def print_word(secret_word, guessed_alpha):
+    ret_word = ""
+    for char in secret_word:
+        if char in guessed_alpha:
+            ret_word += char
+        else:
+            ret_word += '-'
+    return ret_word
+
+
 def play_game(secret_word):
-    """
-    Add your code (remember to delete the "pass" below)
-    """
-    pass
+    guessed_alpha = []
+    while INITIAL_GUESSES:
+        updated_word = print_word(secret_word, guessed_alpha)
+        if updated_word == secret_word:
+            print("The guess is correct.")
+            print("Congratulation, the word is:", secret_word)
+            break
+        print("The word now looks like this:", updated_word)
+        print("You have {} guesses left".format(INITIAL_GUESSES))
+        guess = input("Type a single letter here, then press enter: ").upper()
+        guessed_alpha.append(guess)
+        if guess not in secret_word:
+            INITIAL_GUESSES -= 1
+    if INITIAL_GUESSES == 0:
+        print("Sorry, you lost. The secret word was:", secret_word)
 
 
 def get_word():
