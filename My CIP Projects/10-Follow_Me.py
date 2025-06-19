@@ -1,4 +1,8 @@
-
+"""
+File: Follow_Me.py
+-------------------
+This is a program 
+"""
 
 from graphics import Canvas
 import time
