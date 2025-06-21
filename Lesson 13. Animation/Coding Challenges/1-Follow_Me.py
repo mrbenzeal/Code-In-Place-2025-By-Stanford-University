@@ -41,6 +41,5 @@ def main():
 # It allows the script to be run as the main program or imported 
   without executing the main function immediately.
 """
-# There is no need to edit code beyond this point
 if __name__ == '__main__':
     main()
