@@ -17,8 +17,11 @@ This project is subject to more improved functionalities like:
 - Click buttons effectively for objects on the canvas.
 - More work on the view receipt option.
 - Improved graphical animations.
-- A better-decomposited program.
+- A better decomposed program.
 - And more.
+
+Here is my Code In Place Certificate link:
+https://codeinplace.stanford.edu/cip5/certificate/dnki2j
 
 VOTE OF THANKS:
 ---------------
@@ -27,7 +30,7 @@ I wish to thank:
 - My 2025 Code In Place Section Members
 - Professor Chris Piech & Mehran Sahami
 - Stanford University's Code in Place 2025 staff
-For making my Python learning journey pleasurable.
+- And everyone who made my Python learning journey pleasurable.
 """
 
 from graphics import Canvas
