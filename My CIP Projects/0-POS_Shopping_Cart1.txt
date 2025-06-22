@@ -3,30 +3,15 @@ CIP_Section_5 PROJECT - Obinna Ani
 -----------------------------------
 File: POS_Shopping_Cart.py
 ---------------------------
+Hello! 
+I made this Project for the 2025 Stanford University's Code In Place Section!
+
 This is a Nigerian Fruit Shop's Point-of-Sale (POS) Shopping Cart System.
-- It is a solo-friendly, interactive Python project using Python graphics canvas, time, os and random imports. 
-- It simulates a real-world retail checkout experience with product selection 
-  via barcode input, a dynamic cart display, stock management, and tax. 
-- Users can clear carts, see visual updates, and receive real-time total cost calculations. 
+- It is a solo-friendly, interactive Python project using Python graphics canvas, time, os and random imports.
+- It simulates a real-world retail checkout experience with product selection via barcode input, a dynamic cart display, stock management, and tax.
+- Users can clear carts, see visual updates, and receive real-time total cost calculations.
 - Receipts can be exported, saved, and viewed on the terminal and canvas using the customer's name, timestamps, and loyalty points. 
 - Admin functions also include restocking.
-
-NOTE:
------
-This project is subject to more improved functionalities like:
-- Click buttons effectively for objects on the canvas.
-- Improved graphical animations.
-- A better-decomposited program.
-- And more.
-
-VOTE OF THANKS:
----------------
-I wish to thank:
-- My Section Leader: Anna Q
-- My 2025 Code In Place Section Members
-- Professor Chris Piech & Mehran Sahami
-- Stanford University's Code in Place 2025 staff
-For making my Python learning journey pleasurable.
 """
 
 from graphics import Canvas
