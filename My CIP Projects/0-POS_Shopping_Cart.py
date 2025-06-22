@@ -1,8 +1,11 @@
 """
-CIP_Section_5 PROJECT - Obinna Ani
------------------------------------
+CIP_Section_5 PROJECT - Obinna B. Ani
+--------------------------------------
 File: POS_Shopping_Cart.py
 ---------------------------
+Hello! 
+I made this Project for the 2025 Stanford University's Code In Place Section!
+
 This is a Nigerian Fruit Shop's Point-of-Sale (POS) Shopping Cart System.
 - It is a solo-friendly, interactive Python project using Python graphics canvas, time, os and random imports. 
 - It simulates a real-world retail checkout experience with product selection 
