@@ -1,1 +1,2 @@
-![screencapture-codeinplace-stanford-edu-cip5-ide-a-stepup-2025-06-23-16_27_09](https://github.com/user-attachments/assets/5d35fd72-0631-4817-9631-0abde639517e)
+
+![screencapture-codeinplace-stanford-edu-cip5-ide-a-stepup-2025-06-24-08_45_12](https://github.com/user-attachments/assets/78d9add0-0879-402f-a0cd-1105eeabdbed)
