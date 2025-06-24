@@ -1,1 +1,2 @@
-![screencapture-codeinplace-stanford-edu-cip5-ide-a-obstacles-2025-06-23-17_42_22](https://github.com/user-attachments/assets/c28ec278-3c9d-4e31-9627-9f5ff4e0cf35)
+
+![screencapture-codeinplace-stanford-edu-cip5-ide-a-obstacles-2025-06-24-08_41_54](https://github.com/user-attachments/assets/6615a80a-0b95-43d2-b14a-de6d10c395f5)
