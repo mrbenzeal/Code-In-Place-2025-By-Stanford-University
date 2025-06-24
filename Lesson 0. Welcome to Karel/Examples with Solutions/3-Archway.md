@@ -1,1 +1,2 @@
-![screencapture-codeinplace-stanford-edu-cip5-ide-a-archway-2025-06-23-17_44_35](https://github.com/user-attachments/assets/ccaf2961-a20d-40aa-8385-78610c8f6af6)
+
+![screencapture-codeinplace-stanford-edu-cip5-ide-a-archway-2025-06-24-08_39_59](https://github.com/user-attachments/assets/d5f9df5b-6a7e-4b40-9e8b-09606c719dbf)
