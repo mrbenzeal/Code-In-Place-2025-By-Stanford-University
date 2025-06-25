@@ -1,12 +1,14 @@
-# This tells Python who Karel is
-# Every Karel file has a line just like it
-from karel.stanfordkarel import *
-
 """
-This code instructs Karel to place a zig zag pattern of beepers such that 
+File: Zig_Zag.py
+-----------------
+This program instructs Karel to place a zig zag pattern of beepers such that 
 all odd columns have beepers in row 1 and all even columns have beepers in row 2.
 Karel should end up in the bottom right corner of the world.
 """
+
+# This tells Python who Karel is
+# Every Karel file has a line just like it
+from karel.stanfordkarel import *
 
 def main():
     """
@@ -19,7 +21,8 @@ def main():
 
 def zig_one_zag():
     """
-    Places two beepers at a time. Karel starts facing East in row 1, and Karel will end in row 2.
+    Places two beepers at a time. Karel starts facing East in row 1, 
+    and Karel will end in row 2.
     If both beepers can be placed (Karel doesn't start facing a wall), 
     Karel will end up one column greater than where Karel started. 
     If not, Karel will be in the same column as initially.
@@ -39,13 +42,14 @@ def zig_one_zag():
 def turn_right():
     for i in range(3):
         turn_left()
- 
-       
+  
+        
 def move_to_next_zigzag_spot():
     """
     Moves Karel to the next spot to perform zig_one_zag(). 
     Karel starts facing East in row 2, and will end up in row 1.
-    If Karel is not facing a wall, Karel will end up one column greater than where Karel started. 
+    If Karel is not facing a wall, 
+    Karel will end up one column greater than where Karel started. 
     Otherwise, Karel will be in the same column as initially.
     """
     turn_right()  # Face South
@@ -55,7 +59,13 @@ def move_to_next_zigzag_spot():
         move()
 
 
+"""
 # This is "boilerplate" code which launches your code
-# when you hit the run button
+  when you hit the run button
+# This provided line is required at the end of Python file 
+  to call the main() function.
+# It allows the script to be run as the main program or imported 
+  without executing the main function immediately.
+"""
 if __name__ == '__main__':
     main()
