@@ -1,7 +1,7 @@
 """
-This is a worked example. This code is starter code; you should edit and run it to 
-solve the problem. You can click the blue show solution button on the left to see 
-the answer if you get too stuck or want to check your work!
+File: Move_5.py
+----------------
+This program has Karel move forward 5 times
 """
 
 from karel.stanfordkarel import *
@@ -14,7 +14,13 @@ def main():
         move()
 
 
-# There is no need to edit code beyond this point
-
+"""
+# This is "boilerplate" code which launches your code
+  when you hit the run button
+# This provided line is required at the end of Python file 
+  to call the main() function.
+# It allows the script to be run as the main program or imported 
+  without executing the main function immediately.
+"""
 if __name__ == '__main__':
     main()
