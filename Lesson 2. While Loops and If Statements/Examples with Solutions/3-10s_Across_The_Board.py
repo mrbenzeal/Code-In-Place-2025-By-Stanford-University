@@ -1,6 +1,7 @@
 """
-This is a worked example. It shows an example of Karel
-using a while loop to place a row of beepers
+File: 10s_Across_The_Board.py
+------------------------------
+This program has Karel place 10 beepers in each position in the bottom row.
 """
 
 from karel.stanfordkarel import *
@@ -22,6 +23,13 @@ def put_beeper_ten_times():
     for i in range(10):
         put_beeper()
 
-# There is no need to edit code beyond this point
+"""
+# This is "boilerplate" code which launches your code
+  when you hit the run button
+# This provided line is required at the end of Python file 
+  to call the main() function.
+# It allows the script to be run as the main program or imported 
+  without executing the main function immediately.
+"""
 if __name__ == '__main__':
     main()
