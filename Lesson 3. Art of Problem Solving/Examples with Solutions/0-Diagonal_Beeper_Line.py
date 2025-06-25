@@ -1,13 +1,13 @@
-# This tells Python who Karel is
-# Every Karel file has a line just like it
-from karel.stanfordkarel import *
-
 """
 # A warmup example. 
 Makes karel place a diagonal beeper line. 
 Recall how while loops work, and practice stepping up! 
 We are going to use a similar sequence of commands here.
 """
+
+# This tells Python who Karel is
+# Every Karel file has a line just like it
+from karel.stanfordkarel import *
 
 def main():
     # keep stepping up until the top
@@ -24,6 +24,7 @@ def turn_right():
     # defines turn_right as 3x turn_left
     for i in range(3):
         turn_left()
+
 
 # This is "boilerplate" code which launches your code
 # when you hit the run button
