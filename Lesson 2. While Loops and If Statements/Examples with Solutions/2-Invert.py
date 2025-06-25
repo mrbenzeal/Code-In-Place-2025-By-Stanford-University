@@ -1,8 +1,11 @@
 """
-This is a worked example. Karel will "invert" each beeper 
-in the first row. To invert a beeper: if there was a beeper
-pick it up. Otherwise, put one down.
+File: Invert.py
+----------------
+This program has Karel "invert" each beeper in the first row. 
+To invert a beeper: if there was a beeper pick it up. 
+Otherwise, put one down.
 """
+
 from karel.stanfordkarel import *
 
 def main():
@@ -15,6 +18,7 @@ def main():
     # this is a fence-post bug correction
     invert_beeper()
 
+
 """ this function flips whether or not there is a beeper """
 def invert_beeper():
     if beepers_present():
@@ -23,6 +27,13 @@ def invert_beeper():
         put_beeper()
 
 
-# There is no need to edit code beyond this point
+"""
+# This is "boilerplate" code which launches your code
+  when you hit the run button
+# This provided line is required at the end of Python file 
+  to call the main() function.
+# It allows the script to be run as the main program or imported 
+  without executing the main function immediately.
+"""
 if __name__ == '__main__':
     main()
