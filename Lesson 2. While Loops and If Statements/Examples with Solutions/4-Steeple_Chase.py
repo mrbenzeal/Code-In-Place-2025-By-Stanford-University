@@ -1,20 +1,11 @@
 """
-File: SteepleChaseKarel.py
---------------------------
-Karel runs a steeple chase that is 9 avenues long.
+File: Steeple_Chase.py
+-----------------------
+This program has Karel runs a steeple chase that is 9 avenues long.
 Hurdles are of arbitrary height and placement.
 """
 
-"""
-This is a worked example. This code is starter code; you should edit and run it to 
-solve the problem. You can click the blue show solution button on the left to see 
-the answer if you get too stuck or want to check your work!
-
-Note: The starter code for this example is the solution.
-"""
-
 from karel.stanfordkarel import *
-
 
 def main():
     """
@@ -82,7 +73,13 @@ def turn_right():
         turn_left()
 
 
-# There is no need to edit code beyond this point
-
+"""
+# This is "boilerplate" code which launches your code
+  when you hit the run button
+# This provided line is required at the end of Python file 
+  to call the main() function.
+# It allows the script to be run as the main program or imported 
+  without executing the main function immediately.
+"""
 if __name__ == '__main__':
     main()
