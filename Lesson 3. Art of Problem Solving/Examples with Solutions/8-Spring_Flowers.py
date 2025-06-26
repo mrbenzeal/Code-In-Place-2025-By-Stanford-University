@@ -1,13 +1,15 @@
-# This tells Python who Karel is
-# Every Karel file has a line just like it
-from karel.stanfordkarel import *
-
 """
-This code instructs Karel to start in the bottom left corner of a world 
+File: Spring_Flowers.py
+------------------------
+This program instructs Karel to start in the bottom left corner of a world 
 with 2 empty flower stems, facing East.
 Karel will bloom both flowers with beepers 
 and end in the bottom right corner of the world facing East.
 """
+
+# This tells Python who Karel is
+# Every Karel file has a line just like it
+from karel.stanfordkarel import *
 
 def main():
     # Karel makes springtime happen by blooming both flower stems in the world!
@@ -67,7 +69,13 @@ def turn_right():
     	turn_left()
 
 
+"""
 # This is "boilerplate" code which launches your code
-# when you hit the run button
+  when you hit the run button
+# This provided line is required at the end of Python file 
+  to call the main() function.
+# It allows the script to be run as the main program or imported 
+  without executing the main function immediately.
+"""
 if __name__ == '__main__':
     main()
