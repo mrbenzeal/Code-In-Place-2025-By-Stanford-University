@@ -1,12 +1,14 @@
-# This tells Python who Karel is
-# Every Karel file has a line just like it
-from karel.stanfordkarel import *
-
 """
-This code instructs Karel to start at one dead end, 
+File: Labyrinth.py
+-------------------
+This program instructs Karel to start at one dead end, 
 move forwards through the labyrinth, 
 and will eventually end up at the other dead end.
 """
+
+# This tells Python who Karel is
+# Every Karel file has a line just like it
+from karel.stanfordkarel import *
 
 def main():
     # Solves labyrinth.
@@ -39,7 +41,13 @@ def turn_right():
         turn_left()
 
 
+"""
 # This is "boilerplate" code which launches your code
-# when you hit the run button
+  when you hit the run button
+# This provided line is required at the end of Python file 
+  to call the main() function.
+# It allows the script to be run as the main program or imported 
+  without executing the main function immediately.
+"""
 if __name__ == '__main__':
     main()
