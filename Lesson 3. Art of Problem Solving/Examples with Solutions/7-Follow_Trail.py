@@ -1,12 +1,14 @@
-# This tells Python who Karel is
-# Every Karel file has a line just like it
-from karel.stanfordkarel import *
-
 """
-This code instructs Karel to follow the trail of beepers 
+File: Follow_Trail.py
+----------------------
+This program instructs Karel to follow the trail of beepers 
 (picking up beepers as she goes) until the end!
 Karel will end up in the third cell down from the top right corner, facing East.
 """
+
+# This tells Python who Karel is
+# Every Karel file has a line just like it
+from karel.stanfordkarel import *
 
 def main():
     while beepers_present():
@@ -45,7 +47,13 @@ def turn_around():
     turn_left()
 
 
+"""
 # This is "boilerplate" code which launches your code
-# when you hit the run button
+  when you hit the run button
+# This provided line is required at the end of Python file 
+  to call the main() function.
+# It allows the script to be run as the main program or imported 
+  without executing the main function immediately.
+"""
 if __name__ == '__main__':
     main()
