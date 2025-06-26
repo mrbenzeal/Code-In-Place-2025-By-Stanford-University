@@ -1,21 +1,16 @@
 """
 File: Zebra_Crossing_Karel.py
 ------------------------------
-This program has Karel place beepers in a square (4 beepers total) 
-and end in the same position Karel starts in.
-"""
-
-# This tells Python who Karel is
-# Every Karel file has a line just like it
-from karel.stanfordkarel import *
-
-"""
-This code instructs Karel to make a Zebra crossing, 
+This program instructs Karel to make a Zebra crossing, 
 defined as as a pattern of:
 2-square wide column of beepers, 
 followed by repeating pairs of a 3-square wide gap 
 and a 2-square wide column of beepers. 
 """
+
+# This tells Python who Karel is
+# Every Karel file has a line just like it
+from karel.stanfordkarel import *
 
 def main():
     draw_stripe()
