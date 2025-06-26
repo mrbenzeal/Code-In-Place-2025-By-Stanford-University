@@ -1,3 +1,10 @@
+"""
+File: Zebra_Crossing_Karel.py
+------------------------------
+This program has Karel place beepers in a square (4 beepers total) 
+and end in the same position Karel starts in.
+"""
+
 # This tells Python who Karel is
 # Every Karel file has a line just like it
 from karel.stanfordkarel import *
@@ -56,10 +63,16 @@ def beeper_column():
 
 def turn_right():
     for i in range(3):
-    	turn_left()
+        turn_left()
 
 
+"""
 # This is "boilerplate" code which launches your code
-# when you hit the run button
+  when you hit the run button
+# This provided line is required at the end of Python file 
+  to call the main() function.
+# It allows the script to be run as the main program or imported 
+  without executing the main function immediately.
+"""
 if __name__ == '__main__':
     main()
